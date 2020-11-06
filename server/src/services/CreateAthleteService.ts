@@ -1,32 +1,44 @@
+import { getRepository } from 'typeorm';
 import AppError from '../errors/AppError';
 import Athlete from '../models/Athlete';
-import AthletesRepository from '../repositories/AthletesRepository';
+import Subscription from '../models/Subscription';
 
-interface Request {
+interface IRequest {
   name: string;
   birthDate: Date;
+  phoneNumber: string;
+  subscription_id: string;
 }
 
 class CreateAthleteService {
-  private athletesRepository: AthletesRepository;
-
-  constructor(athletesRepository: AthletesRepository) {
-    this.athletesRepository = athletesRepository;
-  }
-
-  public execute({ name, birthDate }: Request): Athlete {
+  public async execute({
+    name,
+    birthDate,
+    phoneNumber,
+    subscription_id,
+  }: IRequest): Promise<Athlete> {
     if (!name) {
-      throw new AppError(400, 'Nome não pode estar vazio.')
+      throw new AppError(400, 'Nome não pode estar vazio.');
     }
 
     if (!birthDate) {
-      throw new AppError(400, 'Data de nascimento não pode estar vazia.')
+      throw new AppError(400, 'Data de nascimento não pode estar vazia.');
     }
 
-    const athlete = this.athletesRepository.create({
+    const athletesRepository = getRepository(Athlete);
+
+    const subscriptionsRepository = getRepository(Subscription);
+
+    const subscription = await subscriptionsRepository.findOne(subscription_id);
+
+    const athlete = athletesRepository.create({
       name,
       birthDate,
+      phoneNumber,
+      subscription,
     });
+
+    await athletesRepository.save(athlete);
 
     return athlete;
   }

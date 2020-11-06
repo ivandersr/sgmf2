@@ -1,20 +1,14 @@
+import { getRepository } from 'typeorm';
 import AppError from '../errors/AppError';
 import Subscription from '../models/Subscription';
-import SubscriptionsRepository from '../repositories/SubscriptionsRepository';
 
-interface Request {
+interface IRequest {
   title: string;
   value: number;
 }
 
 class CreateSubscriptionService {
-  private subscriptionsRepository: SubscriptionsRepository;
-
-  constructor(subscriptionsRepository: SubscriptionsRepository) {
-    this.subscriptionsRepository = subscriptionsRepository;
-  }
-
-  public execute({ title, value }: Request): Subscription {
+  public async execute({ title, value }: IRequest): Promise<Subscription> {
     if (!title) {
       throw new AppError(400, 'Título do plano não deve ser vazio');
     }
@@ -23,10 +17,14 @@ class CreateSubscriptionService {
       throw new AppError(400, 'Valor do plano não deve ser vazio.');
     }
 
-    const subscription = this.subscriptionsRepository.create({
+    const subscriptionsRepository = getRepository(Subscription);
+
+    const subscription = subscriptionsRepository.create({
       title,
       value,
     });
+
+    await subscriptionsRepository.save(subscription);
 
     return subscription;
   }

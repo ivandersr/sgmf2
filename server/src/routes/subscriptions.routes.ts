@@ -1,23 +1,23 @@
 import { Router } from 'express';
-import SubscriptionsRepository from '../repositories/SubscriptionsRepository';
+import { getRepository } from 'typeorm';
+import Subscription from '../models/Subscription';
 import CreateSubscriptionService from '../services/CreateSubscriptionService';
 
 const subscriptionsRouter = Router();
-const subscriptionsRepository = new SubscriptionsRepository();
-const createSubscriptionService = new CreateSubscriptionService(
-  subscriptionsRepository
-);
 
-subscriptionsRouter.get('/', (request, response) => {
-  const subscriptions = subscriptionsRepository.all();
-  return response.json(subscriptions);
+subscriptionsRouter.get('/', async (request, response) => {
+  const subscriptionsRepository = getRepository(Subscription);
+  const subscriptions = await subscriptionsRepository.find();
+  return response.status(200).json(subscriptions);
 });
 
-subscriptionsRouter.post('/', (request, response) => {
-  const { title, value } = request.body;
-
+subscriptionsRouter.post('/', async (request, response) => {
   try {
-    const subscription = createSubscriptionService.execute({
+    const { title, value } = request.body;
+
+    const createSubscriptionService = new CreateSubscriptionService();
+
+    const subscription = await createSubscriptionService.execute({
       title,
       value,
     });
@@ -26,9 +26,8 @@ subscriptionsRouter.post('/', (request, response) => {
   } catch (err) {
     return response.status(err.statusCode).json({
       message: err.message,
-    })
+    });
   }
-
-})
+});
 
 export default subscriptionsRouter;
