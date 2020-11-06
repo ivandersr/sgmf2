@@ -18,12 +18,17 @@ athletesRouter.post('/', (request, response) => {
 
   const parsedBirthDate = parseISO(birthDate);
 
-  const athlete = createAthleteService.execute({
-    name,
-    birthDate: parsedBirthDate,
-  })
+  try {
+    const athlete = createAthleteService.execute({
+      name,
+      birthDate: parsedBirthDate,
+    })
 
-  return response.status(201).json(athlete);
+    return response.status(201).json(athlete);
+  } catch (err) {
+    return response.status(err.statusCode).json({ message: err.message });
+  }
+
 })
 
 export default athletesRouter;

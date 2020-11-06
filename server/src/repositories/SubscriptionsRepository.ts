@@ -1,5 +1,10 @@
 import Subscription from '../models/Subscription';
 
+interface CreateSubscriptionDTO {
+  title: string;
+  value: number;
+}
+
 class SubscriptionsRepository {
   private subscriptions: Subscription[];
 
@@ -7,7 +12,7 @@ class SubscriptionsRepository {
     this.subscriptions = [];
   }
 
-  public create(title: string, value: number) {
+  public create({ title, value }: CreateSubscriptionDTO): Subscription {
     const subscription = new Subscription({ title, value });
     this.subscriptions.push(subscription);
     return subscription;

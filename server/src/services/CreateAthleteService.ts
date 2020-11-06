@@ -19,6 +19,10 @@ class CreateAthleteService {
       throw new AppError(400, 'Nome não pode estar vazio.')
     }
 
+    if (!birthDate) {
+      throw new AppError(400, 'Data de nascimento não pode estar vazia.')
+    }
+
     const athlete = this.athletesRepository.create({
       name,
       birthDate,
