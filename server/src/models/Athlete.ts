@@ -27,6 +27,15 @@ class Athlete {
   @Column()
   subscription_id: string;
 
+  @Column()
+  lastPayValue: number;
+
+  @Column()
+  dueDate: Date;
+
+  @Column()
+  lastPayDate: Date;
+
   @ManyToOne(() => Subscription)
   @JoinColumn({ name: 'subscription_id' })
   subscription: Subscription;

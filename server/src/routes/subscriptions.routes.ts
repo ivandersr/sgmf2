@@ -24,7 +24,7 @@ subscriptionsRouter.post('/', async (request, response) => {
 
     return response.status(201).json(subscription);
   } catch (err) {
-    return response.status(err.statusCode).json({
+    return response.status(400).json({
       error: err.message,
     });
   }

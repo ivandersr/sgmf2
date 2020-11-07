@@ -36,6 +36,21 @@ export default class CreateAthletes1604690131171 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'lastPayValue',
+            type: 'decimal(5,2)',
+            default: 0,
+          },
+          {
+            name: 'dueDate',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'lastPayDate',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
