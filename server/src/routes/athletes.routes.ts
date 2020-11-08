@@ -13,7 +13,13 @@ athletesRouter.get('/', async (request, response) => {
 });
 
 athletesRouter.post('/', async (request, response) => {
-  const { name, birthDate, phoneNumber, subscription_id } = request.body;
+  const {
+    name,
+    birthDate,
+    phoneNumber,
+    subscription_id,
+    athlete_group_id,
+  } = request.body;
 
   const parsedBirthDate = parseISO(birthDate);
 
@@ -24,6 +30,7 @@ athletesRouter.post('/', async (request, response) => {
       birthDate: parsedBirthDate,
       phoneNumber,
       subscription_id,
+      athlete_group_id,
     });
 
     return response.status(201).json(athlete);

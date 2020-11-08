@@ -7,6 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import AthleteGroup from './AthleteGroup';
 
 import Subscription from './Subscription';
 
@@ -28,6 +29,9 @@ class Athlete {
   subscription_id: string;
 
   @Column()
+  athlete_group_id: string;
+
+  @Column()
   lastPayValue: number;
 
   @Column()
@@ -39,6 +43,10 @@ class Athlete {
   @ManyToOne(() => Subscription)
   @JoinColumn({ name: 'subscription_id' })
   subscription: Subscription;
+
+  @ManyToOne(() => AthleteGroup)
+  @JoinColumn({ name: 'athlete_group_id' })
+  athleteGroup: AthleteGroup;
 
   @CreateDateColumn()
   created_at: Date;

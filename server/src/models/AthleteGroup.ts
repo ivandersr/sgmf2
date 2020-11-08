@@ -1,4 +1,15 @@
-// TODO Classificação entre adultos e crianças
-// Verificar a necessidade da criação da tabela
-// ou utilizar diretamente no model "Athletes"
-// 1 - Adultos <-> 2 - Crianças
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity('athlete_groups')
+class AthleteGroup {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  title: string;
+
+  @Column()
+  description: string;
+}
+
+export default AthleteGroup;
