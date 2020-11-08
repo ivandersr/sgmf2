@@ -5,13 +5,13 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export default class AddAthleteGroupToAthlete1604827054272
+export default class AddReferralGroupToAthlete1604830766788
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
       'athletes',
       new TableColumn({
-        name: 'athlete_group_id',
+        name: 'referral_group_id',
         type: 'uuid',
         isNullable: true,
       }),
@@ -20,18 +20,16 @@ export default class AddAthleteGroupToAthlete1604827054272
     await queryRunner.createForeignKey(
       'athletes',
       new TableForeignKey({
-        name: 'AtheteGroupAthlete',
-        columnNames: ['athlete_group_id'],
-        referencedTableName: 'athlete_groups',
+        name: 'ReferralGroupAthletes',
+        columnNames: ['referral_group_id'],
+        referencedTableName: 'referral_groups',
         referencedColumnNames: ['id'],
-        onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('athlets', 'AtheteGroupAthlete');
-    await queryRunner.dropColumn('athletes', 'athlete_group_id');
+    await queryRunner.dropForeignKey('athletes', 'ReferralGroupAthletes');
+    await queryRunner.dropColumn('athletes', 'referral_group_id');
   }
 }

@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import AthleteGroup from './AthleteGroup';
+import ReferralGroup from './ReferralGroup';
 
 import Subscription from './Subscription';
 
@@ -32,6 +33,9 @@ class Athlete {
   athlete_group_id: string;
 
   @Column()
+  referral_group_id: string;
+
+  @Column()
   lastPayValue: number;
 
   @Column()
@@ -47,6 +51,10 @@ class Athlete {
   @ManyToOne(() => AthleteGroup)
   @JoinColumn({ name: 'athlete_group_id' })
   athleteGroup: AthleteGroup;
+
+  @ManyToOne(() => ReferralGroup)
+  @JoinColumn({ name: 'referral_group_id' })
+  referralGroup: ReferralGroup;
 
   @CreateDateColumn()
   created_at: Date;

@@ -10,6 +10,7 @@ interface IRequest {
   phoneNumber: string;
   subscription_id: string;
   athlete_group_id: string;
+  referral_group_id?: string;
 }
 
 class CreateAthleteService {
@@ -21,11 +22,28 @@ class CreateAthleteService {
     athlete_group_id,
   }: IRequest): Promise<Athlete> {
     if (!name) {
-      throw new AppError(400, 'Nome não pode estar vazio.');
+      throw new AppError(400, 'Nome não pode estar vazio (name).');
     }
 
     if (!birthDate) {
-      throw new AppError(400, 'Data de nascimento não pode estar vazia.');
+      throw new AppError(
+        400,
+        'Data de nascimento não pode estar vazia (birthDate).',
+      );
+    }
+
+    if (!subscription_id) {
+      throw new AppError(
+        400,
+        'Por favor, indique o plano desejado (subscription_id).',
+      );
+    }
+
+    if (!athlete_group_id) {
+      throw new AppError(
+        400,
+        'Indique a qual grupo o aluno pertence (athlete_group_id).',
+      );
     }
 
     const athletesRepository = getRepository(Athlete);
