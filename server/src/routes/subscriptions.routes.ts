@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import Subscription from '../models/Subscription';
 import CreateSubscriptionService from '../services/CreateSubscriptionService';
 
 const subscriptionsRouter = Router();
+
+subscriptionsRouter.use(ensureAuthenticated);
 
 subscriptionsRouter.get('/', async (request, response) => {
   const subscriptionsRepository = getRepository(Subscription);

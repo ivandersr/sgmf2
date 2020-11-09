@@ -3,8 +3,11 @@ import { getRepository } from 'typeorm';
 import { parseISO } from 'date-fns';
 import Athlete from '../models/Athlete';
 import CreateAthleteService from '../services/CreateAthleteService';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const athletesRouter = Router();
+
+athletesRouter.use(ensureAuthenticated);
 
 athletesRouter.get('/', async (request, response) => {
   const athletesRepository = getRepository(Athlete);

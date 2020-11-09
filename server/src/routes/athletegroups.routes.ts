@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import AthleteGroup from '../models/AthleteGroup';
 import CreateAthleteGroupService from '../services/CreateAthleteGroupService';
 
 const athleteGroupsRouter = Router();
+
+athleteGroupsRouter.use(ensureAuthenticated);
 
 athleteGroupsRouter.get('/', async (request, response) => {
   const athleteGroupsRepository = getRepository(AthleteGroup);

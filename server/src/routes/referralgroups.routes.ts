@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import ReferralGroup from '../models/ReferralGroup';
 import CreateReferralGroupService from '../services/CreateReferralGroupService';
 
 const referralGroupsRouter = Router();
+
+referralGroupsRouter.use(ensureAuthenticated);
 
 referralGroupsRouter.get('/', async (request, response) => {
   const referralGroupsRepository = getRepository(ReferralGroup);
