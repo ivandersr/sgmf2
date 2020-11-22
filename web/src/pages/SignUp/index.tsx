@@ -3,6 +3,7 @@ import { FiChevronLeft, FiLock, FiSmile, FiUser } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
+import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Content } from './styles';
 import logoImg from '../../assets/logo.svg';
 import Input from '../../components/Input';
@@ -35,9 +36,8 @@ const SignUp: React.FC = () => {
         abortEarly: false,
       });
     } catch (error) {
-      formRef.current?.setErrors({
-        name: 'Nome obrigatório',
-      });
+      const errors = getValidationErrors(error);
+      formRef.current?.setErrors(errors);
     }
   }, []);
   return (
