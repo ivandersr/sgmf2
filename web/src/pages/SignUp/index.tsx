@@ -1,10 +1,13 @@
 import React, { useCallback, useRef } from 'react';
-import { FiChevronLeft, FiLock, FiSmile, FiUser } from 'react-icons/fi';
+import {
+  FiChevronLeft, FiLock, FiSmile, FiUser,
+} from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
-import { Container, Content } from './styles';
+import { Container, Content, AnimationContainer } from './styles';
 import logoImg from '../../assets/logo.svg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -26,7 +29,7 @@ const SignUp: React.FC = () => {
                 return /^[a-z0-9]*$/.test(value);
               }
               return false;
-            }
+            },
           )
           .min(6, 'No mínimo 6 caracteres'),
         password: Yup.string().min(6, 'No mínimo 6 caracteres'),
@@ -43,23 +46,25 @@ const SignUp: React.FC = () => {
   return (
     <Container>
       <Content>
-        <img src={logoImg} alt="Academia Mulher e Forma" />
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Cadastre seu Usuário</h1>
-          <Input name="name" icon={FiSmile} placeholder="Nome" />
-          <Input name="login" icon={FiUser} placeholder="Login" />
-          <Input
-            name="password"
-            type="password"
-            icon={FiLock}
-            placeholder="Senha"
-          />
-          <Button type="submit">Cadastrar</Button>
-        </Form>
-        <a href="conta">
-          <FiChevronLeft />
-          Voltar para login
-        </a>
+        <AnimationContainer>
+          <img src={logoImg} alt="Academia Mulher e Forma" />
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h1>Cadastre seu Usuário</h1>
+            <Input name="name" icon={FiSmile} placeholder="Nome" />
+            <Input name="login" icon={FiUser} placeholder="Login" />
+            <Input
+              name="password"
+              type="password"
+              icon={FiLock}
+              placeholder="Senha"
+            />
+            <Button type="submit">Cadastrar</Button>
+          </Form>
+          <Link to="/">
+            <FiChevronLeft />
+            Voltar para login
+          </Link>
+        </AnimationContainer>
       </Content>
     </Container>
   );

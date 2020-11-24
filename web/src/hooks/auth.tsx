@@ -1,4 +1,6 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import React, {
+  createContext, useCallback, useState, useContext,
+} from 'react';
 
 import api from '../services/apiClient';
 
@@ -29,7 +31,7 @@ export function useAuth(): AuthContextData {
 }
 
 export const AuthContext = createContext<AuthContextData>(
-  {} as AuthContextData
+  {} as AuthContextData,
 );
 
 export const AuthProvider: React.FC = ({ children }) => {
