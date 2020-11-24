@@ -64,8 +64,9 @@ export const Container = styled(animated.div) <ToastProps>`
     color: inherit;
   }
 
-  ${(props) => !props.hasdescription
-    && css`
+  ${(props) =>
+    !props.hasdescription &&
+    css`
       align-items: center;
 
       svg {
