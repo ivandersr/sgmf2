@@ -9,6 +9,7 @@ import { Container, Content } from './styles';
 import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { useAuth } from '../../hooks/AuthContext';
+import ToastContainer from '../../components/ToastContainer';
 
 interface SignInFormData {
   login: string;
@@ -19,30 +20,31 @@ const SignIn: React.FC = () => {
 
   const { user, signIn } = useAuth();
 
-  console.log(user);
+  const handleSubmit = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          login: Yup.string().required('Login obrigatório'),
+          password: Yup.string().required('Senha obrigatória'),
+        });
 
-  const handleSubmit = useCallback(async (data: SignInFormData) => {
-    try {
-      formRef.current?.setErrors({});
-      const schema = Yup.object().shape({
-        login: Yup.string().required('Login obrigatório'),
-        password: Yup.string().required('Senha obrigatória'),
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        signIn({
+          login: data.login,
+          password: data.password,
+        });
+      } catch (error) {
+        const errors = getValidationErrors(error);
 
-      signIn({
-        login: data.login,
-        password: data.password,
-      });
-    } catch (error) {
-      const errors = getValidationErrors(error);
-
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
+        formRef.current?.setErrors(errors);
+      }
+    },
+    [signIn]
+  );
   return (
     <Container>
       <Content>
@@ -64,6 +66,7 @@ const SignIn: React.FC = () => {
           Criar Conta
         </a>
       </Content>
+      <ToastContainer />
     </Container>
   );
 };
