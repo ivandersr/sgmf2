@@ -8,8 +8,8 @@ import Button from '../../components/Button';
 import { Container, Content } from './styles';
 import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
-import { useAuth } from '../../hooks/AuthContext';
-import ToastContainer from '../../components/ToastContainer';
+import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 interface SignInFormData {
   login: string;
@@ -19,6 +19,7 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { user, signIn } = useAuth();
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
@@ -42,8 +43,9 @@ const SignIn: React.FC = () => {
 
         formRef.current?.setErrors(errors);
       }
+      addToast();
     },
-    [signIn]
+    [signIn, addToast]
   );
   return (
     <Container>
@@ -66,7 +68,6 @@ const SignIn: React.FC = () => {
           Criar Conta
         </a>
       </Content>
-      <ToastContainer />
     </Container>
   );
 };
