@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { FiLogIn, FiUser, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { Container, Content, AnimationContainer } from './styles';
@@ -19,8 +19,9 @@ interface SignInFormData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { user, signIn } = useAuth();
+  const { signIn } = useAuth();
   const { addToast } = useToast();
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
@@ -35,22 +36,29 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        signIn({
+        await signIn({
           login: data.login,
           password: data.password,
         });
-      } catch (error) {
-        const errors = getValidationErrors(error);
 
-        formRef.current?.setErrors(errors);
+        history.push('/alunos');
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(error);
+
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro ao realizar o login',
+          description: 'Houve um erro ao tentar realizar o login',
+        });
       }
-      addToast({
-        type: 'error',
-        title: 'Erro ao realizar o login',
-        description: 'Houve um erro ao tentar realizar o login',
-      });
     },
-    [signIn, addToast],
+    [signIn, history, addToast]
   );
   return (
     <Container>

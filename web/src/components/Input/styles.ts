@@ -40,19 +40,22 @@ export const Container = styled.div<ContainerProps>`
     margin-right: 16px;
   }
 
-  ${(props) => props.hasError
-    && css`
+  ${(props) =>
+    props.hasError &&
+    css`
       border-color: #c53030;
     `}
 
-  ${(props) => props.isFocused
-    && css`
+  ${(props) =>
+    props.isFocused &&
+    css`
       color: #3e9c74;
       border-color: #3e9c74;
     `}
 
-  ${(props) => props.isFilled
-    && css`
+  ${(props) =>
+    props.isFilled &&
+    css`
       color: #3e9c74;
     `}
 `;

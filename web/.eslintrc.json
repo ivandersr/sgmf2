@@ -54,7 +54,8 @@
     ],
     "prettier/prettier": "warn",
     "no-use-before-define": "off",
-    "@typescript-eslint/ban-types": "off"
+    "@typescript-eslint/ban-types": "off",
+    "no-useless-escape": "off"
   },
   "settings": {
     "import/resolver": {
