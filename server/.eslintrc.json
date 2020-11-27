@@ -55,7 +55,10 @@
     "no-useless-constructor": "off",
     "max-len": [
       "error",
-      80
+      {
+        "code": 80,
+        "ignorePattern": "^import .*"
+      }
     ]
   },
   "settings": {

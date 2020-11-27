@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import Subscription from '../models/Subscription';
-import CreateSubscriptionService from '../services/CreateSubscriptionService';
+import Subscription from '@modules/subscriptions/infra/typeorm/entities/Subscription';
+import CreateSubscriptionService from '@modules/subscriptions/services/CreateSubscriptionService';
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const subscriptionsRouter = Router();
 

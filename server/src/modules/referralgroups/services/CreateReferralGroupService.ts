@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
-import AppError from '../errors/AppError';
-import Athlete from '../models/Athlete';
-import ReferralGroup from '../models/ReferralGroup';
+import AppError from '@shared/errors/AppError';
+import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
+import ReferralGroup from '../infra/typeorm/entities/ReferralGroup';
 
 interface IRequest {
   referral_id: string;

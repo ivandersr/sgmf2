@@ -7,10 +7,9 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import AthleteGroup from './AthleteGroup';
-import ReferralGroup from './ReferralGroup';
-
-import Subscription from './Subscription';
+import AthleteGroup from '@modules/athletegroups/infra/typeorm/entities/AthleteGroup';
+import ReferralGroup from '@modules/referralgroups/infra/typeorm/entities/ReferralGroup';
+import Subscription from '@modules/subscriptions/infra/typeorm/entities/Subscription';
 
 @Entity('athletes')
 class Athlete {

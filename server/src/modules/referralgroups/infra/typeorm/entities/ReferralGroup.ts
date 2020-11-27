@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import Athlete from './Athlete';
+import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
 
 @Entity('referral_groups')
 class ReferralGroup {

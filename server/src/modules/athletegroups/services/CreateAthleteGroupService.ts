@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
-import AppError from '../errors/AppError';
-import AthleteGroup from '../models/AthleteGroup';
+import AppError from '@shared/errors/AppError';
+import AthleteGroup from '../infra/typeorm/entities/AthleteGroup';
 
 interface IRequest {
   title: string;

@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
-import AppError from '../errors/AppError';
-import Subscription from '../models/Subscription';
+import AppError from '@shared/errors/AppError';
+import Subscription from '../infra/typeorm/entities/Subscription';
 
 interface IRequest {
   title: string;

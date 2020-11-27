@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
 import { parseISO } from 'date-fns';
-import Athlete from '../models/Athlete';
-import CreateAthleteService from '../services/CreateAthleteService';
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
+import CreateAthleteService from '@modules/athletes/services/CreateAthleteService';
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const athletesRouter = Router();
 

@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import ReferralGroup from '../models/ReferralGroup';
-import CreateReferralGroupService from '../services/CreateReferralGroupService';
+import ReferralGroup from '@modules/referralgroups/infra/typeorm/entities/ReferralGroup';
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
+import CreateReferralGroupService from '@modules/referralgroups/services/CreateReferralGroupService';
 
 const referralGroupsRouter = Router();
 

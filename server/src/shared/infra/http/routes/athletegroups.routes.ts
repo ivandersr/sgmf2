@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import AthleteGroup from '../models/AthleteGroup';
-import CreateAthleteGroupService from '../services/CreateAthleteGroupService';
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
+import AthleteGroup from '@modules/athletegroups/infra/typeorm/entities/AthleteGroup';
+import CreateAthleteGroupService from '@modules/athletegroups/services/CreateAthleteGroupService';
 
 const athleteGroupsRouter = Router();
 
