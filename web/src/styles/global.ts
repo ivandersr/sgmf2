@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import { shade } from 'polished';
 
 const primaryColor = '#3e9c74';
-const secondaryColor = '#a6a6a6';
+const secondaryColor = '#c6c6c6';
 const backgroundColor = '#423f48';
 const primaryTextColor = '#312e38';
 const secondaryTextColor = '#212128';

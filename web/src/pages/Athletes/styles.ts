@@ -29,15 +29,21 @@ export const AthletesTable = styled.table`
     border-radius: 10px 10px 0 0;
     width: 100%;
     background-color: var(--primary-color);
-    th {
-      width: 25%;
-      padding: 10px;
+    tr {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      th {
+        padding: 10px;
+        width: 100vw;
+      }
     }
   }
 
   tbody {
     width: 100%;
     display: flex;
+    flex-direction: column;
     border-radius: 0 0 10px 10px;
     background-color: var(--secondary-color);
     color: var(--secondary-text-color);

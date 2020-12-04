@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import { getRepository } from 'typeorm';
 import { parseISO } from 'date-fns';
-import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
 import CreateAthleteService from '@modules/athletes/services/CreateAthleteService';
+import FindAthletesService from '@modules/athletes/services/FindAthletesService';
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const athletesRouter = Router();
@@ -10,8 +9,14 @@ const athletesRouter = Router();
 athletesRouter.use(ensureAuthenticated);
 
 athletesRouter.get('/', async (request, response) => {
-  const athletesRepository = getRepository(Athlete);
-  const athletes = await athletesRepository.find();
+  const findAthletes = new FindAthletesService();
+  const { page, pageSize } = request.query;
+
+  const athletes = await findAthletes.execute({
+    page: String(page),
+    pageSize: String(pageSize),
+  })
+
   return response.json(athletes);
 });
 
