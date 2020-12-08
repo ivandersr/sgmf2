@@ -42,24 +42,24 @@ const SignUp: React.FC = () => {
             .test(
               'valid-phone',
               'Informe um número de telefone válido',
-              (value) => {
+              value => {
                 if (value) {
                   return /(\(?\d{2}\)?\s?)?(\d{4,5}\-?\d{4})/.test(value);
                 }
                 return false;
-              }
+              },
             ),
           login: Yup.string()
             .required('Login Obrigatório')
             .test(
               'valid-login',
               'Utilize apenas letras minúsculas e números',
-              (value) => {
+              value => {
                 if (value) {
                   return /^[a-z0-9]*$/.test(value);
                 }
                 return false;
-              }
+              },
             )
             .min(6, 'No mínimo 6 caracteres'),
           password: Yup.string().min(6, 'No mínimo 6 caracteres'),
@@ -94,7 +94,7 @@ const SignUp: React.FC = () => {
         });
       }
     },
-    [addToast, history]
+    [addToast, history],
   );
   return (
     <Container>

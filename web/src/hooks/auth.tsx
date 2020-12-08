@@ -77,7 +77,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       });
       localStorage.setItem('@SGMF2:user', JSON.stringify(user));
     },
-    [data.token]
+    [data.token],
   );
 
   return (
