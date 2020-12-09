@@ -1,23 +1,35 @@
 import { Router } from 'express';
 import { parseISO } from 'date-fns';
 import CreateAthleteService from '@modules/athletes/services/CreateAthleteService';
-import FindAthletesService from '@modules/athletes/services/FindAthletesService';
+import ListAthletesService from '@modules/athletes/services/ListAthletesService';
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
+import FindAthleteService from '@modules/athletes/services/FindAthleteService';
 
 const athletesRouter = Router();
 
 athletesRouter.use(ensureAuthenticated);
 
 athletesRouter.get('/', async (request, response) => {
-  const findAthletes = new FindAthletesService();
+  const listAthletes = new ListAthletesService();
   const { page, pageSize } = request.query;
 
-  const athletes = await findAthletes.execute({
+  const athletes = await listAthletes.execute({
     page: String(page),
     pageSize: String(pageSize),
-  })
+  });
 
-  return response.json(athletes);
+  return response.status(200).json(athletes);
+});
+
+athletesRouter.get('/:id', async (request, response) => {
+  const findAthlete = new FindAthleteService();
+  const { id } = request.params;
+
+  const athlete = await findAthlete.execute({
+    id,
+  });
+
+  return response.status(200).json(athlete);
 });
 
 athletesRouter.post('/', async (request, response) => {

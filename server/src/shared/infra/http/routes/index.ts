@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import atheltesRouter from './athletes.routes';
-import subscriptionsRouter from './subscriptions.routes';
-import usersRouter from './users.routes';
-import sessionsRouter from './session.routes';
-import athleteGroupsRouter from './athletegroups.routes';
-import referralGroupsRouter from './referralgroups.routes';
+import atheltesRouter from '@modules/athletes/infra/http/routes/athletes.routes';
+import subscriptionsRouter from '@modules/subscriptions/infra/http/routes/subscriptions.routes';
+import usersRouter from '@modules/users/infra/http/routes/users.routes';
+import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
+import athleteGroupsRouter from '@modules/athletegroups/infra/http/routes/athletegroups.routes';
+import referralGroupsRouter from '@modules/referralgroups/infra/http/routes/referralgroups.routes';
 
 const routes = Router();
 

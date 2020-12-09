@@ -1,20 +1,19 @@
 import { getRepository } from 'typeorm';
-import Athlete from '../infra/typeorm/entities/Athlete';
 import AppError from '@shared/errors/AppError';
+import Athlete from '../infra/typeorm/entities/Athlete';
 
 interface IRequest {
   page: string;
   pageSize: string;
 }
 
-
-
-class FindAthletesService {
+class ListAthletesService {
   public async execute({ page, pageSize }: IRequest): Promise<Athlete[]> {
     const athletesRepository = getRepository(Athlete);
 
     if (!page || !pageSize) {
-      return await athletesRepository.find();
+      const athletes = await athletesRepository.find();
+      return athletes;
     }
 
     if (isNaN(Number(page)) || isNaN(Number(pageSize))) {
@@ -30,4 +29,4 @@ class FindAthletesService {
   }
 }
 
-export default FindAthletesService;
+export default ListAthletesService;
