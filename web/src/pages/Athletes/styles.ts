@@ -5,6 +5,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  min-width: 1024px;
 
   button {
     width: 80%;
@@ -33,6 +34,7 @@ export const AthletesTable = styled.table`
       width: 100%;
       display: flex;
       justify-content: center;
+      align-items: center;
       th {
         padding: 10px;
         width: 100vw;

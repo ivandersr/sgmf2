@@ -5,12 +5,24 @@ import Route from './Route';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Athletes from '../pages/Athletes';
+import AthleteEdit from '../pages/AthleteEdit';
+import AthletePayment from '../pages/AthletePayment';
+import AthleteReferralGroup from '../pages/AthleteReferralGroup';
+import AthletePhysicalExam from '../pages/AthletePhysicalExam';
 
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={SignIn} />
     <Route path="/cadastrar" component={SignUp} />
     <Route path="/alunos" component={Athletes} isPrivate />
+    <Route path="/aluno-detalhes" component={AthleteEdit} isPrivate />
+    <Route path="/aluno-mensalidades" component={AthletePayment} isPrivate />
+    <Route path="/aluno-avaliacao" component={AthletePhysicalExam} isPrivate />
+    <Route
+      path="/aluno-indicacoes"
+      component={AthleteReferralGroup}
+      isPrivate
+    />
   </Switch>
 );
 

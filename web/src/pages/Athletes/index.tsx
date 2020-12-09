@@ -54,9 +54,7 @@ const Athletes: React.FC = () => {
               <td>{athlete.dueDate}</td>
               <td>
                 <Button onClick={() => toggleModal()}>Editar</Button>
-                <Modal isOpen={modalOpen} setIsOpen={toggleModal}>
-                  <Button />
-                </Modal>
+                <Modal isOpen={modalOpen} setIsOpen={toggleModal} />
               </td>
             </AthleteRow>
           ))}
