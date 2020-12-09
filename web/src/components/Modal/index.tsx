@@ -3,12 +3,25 @@ import ReactModal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { Content } from './styles';
 
+interface Athlete {
+  id: string;
+  name: string;
+  birthDate: Date;
+  phoneNumber: string;
+  dueDate: Date;
+}
+
 interface ModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
+  selectedAthlete: Athlete;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, setIsOpen }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  setIsOpen,
+  selectedAthlete,
+}) => {
   const [modalStatus, setModalStatus] = useState(isOpen);
 
   useEffect(() => {
@@ -42,7 +55,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, setIsOpen }) => {
     >
       <Content>
         <h1>O que deseja fazer?</h1>
-        <Link to="aluno-detalhes">Editar Dados</Link>
+        <Link to={{ pathname: 'aluno-detalhes', search: selectedAthlete.id }}>
+          Editar Dados
+        </Link>
         <Link to="aluno-mensalidades">Gerenciar Mensalidades</Link>
         <Link to="aluno-indicacoes">Grupo de Indicações</Link>
         <Link to="aluno-avaliacao">Avaliação física</Link>

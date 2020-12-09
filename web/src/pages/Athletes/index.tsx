@@ -18,6 +18,9 @@ interface Athlete {
 
 const Athletes: React.FC = () => {
   const [athletes, setAthletes] = useState<Athlete[]>([]);
+  const [selectedAthlete, setSelectedAthlete] = useState<Athlete>(
+    {} as Athlete,
+  );
   const [modalOpen, setModalOpen] = useState(false);
 
   const { signOut } = useAuth();
@@ -26,8 +29,16 @@ const Athletes: React.FC = () => {
     setModalOpen(!modalOpen);
   }, [modalOpen]);
 
+  const handleSelectedAthlete = useCallback(
+    (athlete: Athlete) => {
+      setSelectedAthlete(athlete);
+      toggleModal();
+    },
+    [toggleModal],
+  );
+
   useEffect(() => {
-    api.get('/athletes?page=1&pageSize=10').then(response => {
+    api.get('/athletes?page=1&pageSize=11').then(response => {
       setAthletes(response.data);
     });
   }, []);
@@ -53,8 +64,14 @@ const Athletes: React.FC = () => {
               <td>{athlete.phoneNumber}</td>
               <td>{athlete.dueDate}</td>
               <td>
-                <Button onClick={() => toggleModal()}>Editar</Button>
-                <Modal isOpen={modalOpen} setIsOpen={toggleModal} />
+                <Button onClick={() => handleSelectedAthlete(athlete)}>
+                  Editar
+                </Button>
+                <Modal
+                  isOpen={modalOpen}
+                  setIsOpen={() => toggleModal()}
+                  selectedAthlete={selectedAthlete}
+                />
               </td>
             </AthleteRow>
           ))}

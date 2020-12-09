@@ -16,8 +16,16 @@ const Routes: React.FC = () => (
     <Route path="/cadastrar" component={SignUp} />
     <Route path="/alunos" component={Athletes} isPrivate />
     <Route path="/aluno-detalhes" component={AthleteEdit} isPrivate />
-    <Route path="/aluno-mensalidades" component={AthletePayment} isPrivate />
-    <Route path="/aluno-avaliacao" component={AthletePhysicalExam} isPrivate />
+    <Route
+      path="/alunos/:id/mensalidades"
+      component={AthletePayment}
+      isPrivate
+    />
+    <Route
+      path="/aluno/:id/avaliacao"
+      component={AthletePhysicalExam}
+      isPrivate
+    />
     <Route
       path="/aluno-indicacoes"
       component={AthleteReferralGroup}
