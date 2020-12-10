@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { parseISO } from 'date-fns';
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 import CreateAthleteService from '@modules/athletes/services/CreateAthleteService';
 import ListAthletesService from '@modules/athletes/services/ListAthletesService';
-import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 import FindAthleteService from '@modules/athletes/services/FindAthleteService';
+import UpdateAthleteService from '@modules/athletes/services/UpdateAthleteService';
 
 const athletesRouter = Router();
 
@@ -41,22 +41,32 @@ athletesRouter.post('/', async (request, response) => {
     athlete_group_id,
   } = request.body;
 
-  const parsedBirthDate = parseISO(birthDate);
+  const createAthleteService = new CreateAthleteService();
+  const athlete = await createAthleteService.execute({
+    name,
+    birthDate,
+    phoneNumber,
+    subscription_id,
+    athlete_group_id,
+  });
 
-  try {
-    const createAthleteService = new CreateAthleteService();
-    const athlete = await createAthleteService.execute({
-      name,
-      birthDate: parsedBirthDate,
-      phoneNumber,
-      subscription_id,
-      athlete_group_id,
-    });
+  return response.status(201).json(athlete);
+});
 
-    return response.status(201).json(athlete);
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
+athletesRouter.put('/:id', async (request, response) => {
+  const { id } = request.params;
+  const { name, birthDate, phoneNumber } = request.body;
+
+  const updateAthlete = new UpdateAthleteService();
+
+  const athlete = await updateAthlete.execute({
+    id,
+    name,
+    birthDate,
+    phoneNumber,
+  });
+
+  return response.status(200).json(athlete);
 });
 
 export default athletesRouter;

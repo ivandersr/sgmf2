@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import { parseISO } from 'date-fns';
 import AppError from '@shared/errors/AppError';
 import Subscription from '@modules/subscriptions/infra/typeorm/entities/Subscription';
 import AthleteGroup from '@modules/athletegroups/infra/typeorm/entities/AthleteGroup';
@@ -6,7 +7,7 @@ import Athlete from '../infra/typeorm/entities/Athlete';
 
 interface IRequest {
   name: string;
-  birthDate: Date;
+  birthDate: string;
   phoneNumber: string;
   subscription_id: string;
   athlete_group_id: string;
@@ -57,7 +58,7 @@ class CreateAthleteService {
 
     const athlete = athletesRepository.create({
       name,
-      birthDate,
+      birthDate: parseISO(birthDate),
       phoneNumber,
       subscription,
       athleteGroup,
