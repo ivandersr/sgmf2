@@ -32,7 +32,10 @@ class CreateReferralGroupService {
       referral: athlete,
     });
 
+    athlete.referralGroup = referralGroup;
+
     await referralGroupsRepository.save(referralGroup);
+    await athletesRepository.save(athlete);
 
     return referralGroup;
   }

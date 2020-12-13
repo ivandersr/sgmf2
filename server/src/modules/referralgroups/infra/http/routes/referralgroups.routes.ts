@@ -3,6 +3,7 @@ import { getRepository } from 'typeorm';
 import ReferralGroup from '@modules/referralgroups/infra/typeorm/entities/ReferralGroup';
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 import CreateReferralGroupService from '@modules/referralgroups/services/CreateReferralGroupService';
+import ListAthletesByReferralGroupService from '@modules/athletes/services/ListAthletesByReferralGroupService';
 
 const referralGroupsRouter = Router();
 
@@ -14,6 +15,18 @@ referralGroupsRouter.get('/', async (request, response) => {
   const referralGroups = await referralGroupsRepository.find();
 
   return response.json(referralGroups);
+});
+
+referralGroupsRouter.get('/athletes', async (request, response) => {
+  const { referralGroupId } = request.body;
+
+  const listByReferralGroup = new ListAthletesByReferralGroupService();
+
+  const athletesByReferral = await listByReferralGroup.execute({
+    referralGroupId,
+  });
+
+  return response.status(200).json(athletesByReferral);
 });
 
 referralGroupsRouter.post('/', async (request, response) => {
@@ -28,7 +41,7 @@ referralGroupsRouter.post('/', async (request, response) => {
 
     return response.status(201).json(referralGroup);
   } catch (err) {
-    return response.status(400).json({ error: err.messag });
+    return response.status(400).json({ error: err.message });
   }
 });
 
