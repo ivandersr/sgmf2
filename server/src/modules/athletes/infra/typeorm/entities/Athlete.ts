@@ -34,15 +34,6 @@ class Athlete {
   @Column()
   referral_group_id: string;
 
-  @Column()
-  lastPayValue: number;
-
-  @Column()
-  dueDate: Date;
-
-  @Column()
-  lastPayDate: Date;
-
   @ManyToOne(() => Subscription)
   @JoinColumn({ name: 'subscription_id' })
   subscription: Subscription;

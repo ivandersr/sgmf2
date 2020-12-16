@@ -19,7 +19,8 @@
     "pg": "^8.4.2",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.29",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "resolve": "1.8.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
