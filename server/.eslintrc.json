@@ -25,6 +25,7 @@
   ],
   "rules": {
     "no-restricted-globals": "off",
+    "import/no-extraneous-dependencies": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -41,6 +42,7 @@
         "argsIgnorePattern": "_"
       }
     ],
+    "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/naming-convention": [
       "error",
       {
