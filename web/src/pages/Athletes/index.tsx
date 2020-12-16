@@ -13,7 +13,6 @@ interface Athlete {
   name: string;
   birthDate: Date;
   phoneNumber: string;
-  dueDate: Date;
 }
 
 const Athletes: React.FC = () => {
@@ -52,7 +51,6 @@ const Athletes: React.FC = () => {
             <th>Nome</th>
             <th>Data de Nascimento</th>
             <th>Telefone</th>
-            <th>Próximo Vencimento</th>
             <th style={{ visibility: 'hidden' }}>Botões</th>
           </tr>
         </thead>
@@ -62,7 +60,6 @@ const Athletes: React.FC = () => {
               <td>{athlete.name}</td>
               <td>{athlete.birthDate}</td>
               <td>{athlete.phoneNumber}</td>
-              <td>{athlete.dueDate}</td>
               <td>
                 <Button onClick={() => handleSelectedAthlete(athlete)}>
                   Editar

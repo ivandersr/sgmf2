@@ -8,7 +8,6 @@ interface Athlete {
   name: string;
   birthDate: Date;
   phoneNumber: string;
-  dueDate: Date;
 }
 
 interface ModalProps {
