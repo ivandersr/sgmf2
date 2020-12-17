@@ -7,25 +7,36 @@ interface IRequest {
   pageSize: string;
 }
 
+interface IResponse {
+  athletes: Athlete[];
+  total: number;
+  pages: number;
+}
+
 class ListAthletesService {
-  public async execute({ page, pageSize }: IRequest): Promise<Athlete[]> {
+  public async execute({ page, pageSize }: IRequest): Promise<IResponse> {
     const athletesRepository = getRepository(Athlete);
 
     if (!page || !pageSize) {
-      const athletes = await athletesRepository.find();
-      return athletes;
+      const [athletes, total] = await athletesRepository.findAndCount();
+      return { athletes, total, pages: 1 };
     }
 
     if (isNaN(Number(page)) || isNaN(Number(pageSize))) {
       throw new AppError(400, 'A página e seu tamanho devem ser numéricos');
     }
 
-    const athletes = await athletesRepository.find({
+    const [athletes, total] = await athletesRepository.findAndCount({
       skip: Number(page) * Number(pageSize),
       take: Number(pageSize),
+      order: {
+        name: 'ASC',
+      },
     });
 
-    return athletes;
+    const pages = Math.ceil(total / Number(pageSize));
+
+    return { athletes, total, pages };
   }
 }
 
