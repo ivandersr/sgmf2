@@ -17,6 +17,7 @@ const Pagination: React.FC<IProps> = ({
     <div className="pagination-container">
       {paginationItems.map(item => (
         <button
+          key={item}
           type="button"
           className={`pagination-item
             ${activePage === item ? 'active' : 'inactive'}`}

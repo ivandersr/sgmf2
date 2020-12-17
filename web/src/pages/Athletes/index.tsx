@@ -2,9 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 import PageHeader from '../../components/PageHeader';
+import Pagination from '../../components/Pagination';
 
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/apiClient';
+import { formatDate } from '../../utils/formatDate';
 
 import { AthletesTable, AthleteRow, Container } from './styles';
 
@@ -20,6 +22,8 @@ const Athletes: React.FC = () => {
   const [selectedAthlete, setSelectedAthlete] = useState<Athlete>(
     {} as Athlete,
   );
+  const [activePage, setActivePage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
 
   const { signOut } = useAuth();
@@ -37,10 +41,11 @@ const Athletes: React.FC = () => {
   );
 
   useEffect(() => {
-    api.get('/athletes?page=1&pageSize=11').then(response => {
-      setAthletes(response.data);
+    api.get(`/athletes?page=${activePage}&pageSize=11`).then(response => {
+      setAthletes(response.data.athletes);
+      setTotalPages(response.data.pages);
     });
-  }, []);
+  }, [activePage]);
 
   return (
     <Container>
@@ -58,7 +63,7 @@ const Athletes: React.FC = () => {
           {athletes.map(athlete => (
             <AthleteRow key={athlete.id}>
               <td>{athlete.name}</td>
-              <td>{athlete.birthDate}</td>
+              <td>{formatDate(athlete.birthDate)}</td>
               <td>{athlete.phoneNumber}</td>
               <td>
                 <Button onClick={() => handleSelectedAthlete(athlete)}>
@@ -74,6 +79,11 @@ const Athletes: React.FC = () => {
           ))}
         </tbody>
       </AthletesTable>
+      <Pagination
+        goToPage={setActivePage}
+        totalPages={totalPages}
+        activePage={activePage}
+      />
       <Button onClick={() => signOut()}>Sair</Button>
     </Container>
   );
