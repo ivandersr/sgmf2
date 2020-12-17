@@ -41,7 +41,7 @@ const Athletes: React.FC = () => {
   );
 
   useEffect(() => {
-    api.get(`/athletes?page=${activePage}&pageSize=11`).then(response => {
+    api.get(`/athletes?page=${activePage}&pageSize=4`).then(response => {
       setAthletes(response.data.athletes);
       setTotalPages(response.data.pages);
     });

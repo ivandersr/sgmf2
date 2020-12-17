@@ -5,6 +5,7 @@ const primaryColor = '#3e9c74';
 const secondaryColor = '#c6c6c6';
 const backgroundColor = '#423f48';
 const primaryTextColor = '#312e38';
+const primaryTextColorActive = '#ddd';
 const secondaryTextColor = '#212128';
 const headerTextColor = '#eee';
 
@@ -18,6 +19,8 @@ export default createGlobalStyle`
     --primary-color: ${primaryColor};
     --primary-text-color: ${primaryTextColor};
     --primary-color-hover: ${shade(0.2, primaryColor)};
+    --primary-color-active: ${shade(0.3, primaryColor)};
+    --primary-text-color-active: ${primaryTextColorActive};
     --secondary-color: ${secondaryColor};
     --secondary-text-color: ${secondaryTextColor};
     --secondary-color-hover: ${shade(0.1, secondaryColor)};

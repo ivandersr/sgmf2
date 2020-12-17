@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.css';
+import { Container, Page } from './styles';
 
 interface IProps {
   totalPages?: number;
@@ -14,19 +14,18 @@ const Pagination: React.FC<IProps> = ({
 }) => {
   const paginationItems = Array.from(Array(totalPages).keys());
   return (
-    <div className="pagination-container">
+    <Container>
       {paginationItems.map(item => (
-        <button
+        <Page
           key={item}
           type="button"
-          className={`pagination-item
-            ${activePage === item ? 'active' : 'inactive'}`}
+          active={activePage === item}
           onClick={() => goToPage(item)}
         >
           {item + 1}
-        </button>
+        </Page>
       ))}
-    </div>
+    </Container>
   );
 };
 
