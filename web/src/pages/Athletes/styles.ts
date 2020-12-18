@@ -23,7 +23,7 @@ export const AthletesTable = styled.table`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vh;
+  max-width: 1024px;
 
   thead {
     display: flex;

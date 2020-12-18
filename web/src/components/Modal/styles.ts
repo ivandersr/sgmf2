@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
-  background: var(--background-color);
+  background: transparent;
   opacity: 100%;
   display: flex;
   align-items: center;
