@@ -6,6 +6,8 @@ import FindAthleteService from '@modules/athletes/services/FindAthleteService';
 import UpdateAthleteService from '@modules/athletes/services/UpdateAthleteService';
 import UpdateAthleteReferralGroupService from '@modules/athletes/services/UpdateAthleteReferralGroupService';
 import UpdateAthleteActiveFieldService from '@modules/athletes/services/UpdateAthleteActiveFieldService';
+import UpdateAthleteSubscriptionService from '@modules/athletes/services/UpdateAthleteSubscriptionService';
+import UpdateAthleteAthleteGroupService from '@modules/athletes/services/UpdateAthleteAthleteGroupService';
 
 const athletesRouter = Router();
 
@@ -94,6 +96,34 @@ athletesRouter.put('/active/:id', async (request, response) => {
   const athlete = await updateAthleteActiveField.execute({
     athlete_id: id,
     active,
+  });
+
+  return response.status(200).json(athlete);
+});
+
+athletesRouter.put('/subscription/:id', async (request, response) => {
+  const { id } = request.params;
+  const { subscription_id } = request.body;
+
+  const updateAthleteSubscription = new UpdateAthleteSubscriptionService();
+
+  const athlete = await updateAthleteSubscription.execute({
+    athlete_id: id,
+    subscription_id,
+  });
+
+  return response.status(200).json(athlete);
+});
+
+athletesRouter.put('/group/:id', async (request, response) => {
+  const { id } = request.params;
+  const { athlete_group_id } = request.body;
+
+  const updateAthleteAthleteGroup = new UpdateAthleteAthleteGroupService();
+
+  const athlete = await updateAthleteAthleteGroup.execute({
+    athlete_id: id,
+    athlete_group_id,
   });
 
   return response.status(200).json(athlete);
