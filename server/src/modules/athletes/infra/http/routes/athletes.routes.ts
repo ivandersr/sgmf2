@@ -5,6 +5,7 @@ import ListAthletesService from '@modules/athletes/services/ListAthletesService'
 import FindAthleteService from '@modules/athletes/services/FindAthleteService';
 import UpdateAthleteService from '@modules/athletes/services/UpdateAthleteService';
 import UpdateAthleteReferralGroupService from '@modules/athletes/services/UpdateAthleteReferralGroupService';
+import UpdateAthleteActiveFieldService from '@modules/athletes/services/UpdateAthleteActiveFieldService';
 
 const athletesRouter = Router();
 
@@ -82,6 +83,20 @@ athletesRouter.put('/referral/:id', async (request, response) => {
   });
 
   return response.status(200).json(updatedAthlete);
+});
+
+athletesRouter.put('/active/:id', async (request, response) => {
+  const { id } = request.params;
+  const { active } = request.body;
+
+  const updateAthleteActiveField = new UpdateAthleteActiveFieldService();
+
+  const athlete = await updateAthleteActiveField.execute({
+    athlete_id: id,
+    active,
+  });
+
+  return response.status(200).json(athlete);
 });
 
 export default athletesRouter;

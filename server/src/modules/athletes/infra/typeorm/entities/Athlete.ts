@@ -17,6 +17,9 @@ class Athlete {
   id: string;
 
   @Column()
+  active: boolean;
+
+  @Column()
   name: string;
 
   @Column()
