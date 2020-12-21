@@ -1,17 +1,13 @@
 import { getRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
 import AthleteGroup from '../infra/typeorm/entities/AthleteGroup';
-
-interface IRequest {
-  title: string;
-  description: string;
-}
+import ICreateAthleteGroupDTO from '../dtos/ICreateAthleteGroupDTO';
 
 class CreateAthleteGroupService {
   public async execute({
     title,
     description,
-  }: IRequest): Promise<AthleteGroup> {
+  }: ICreateAthleteGroupDTO): Promise<AthleteGroup> {
     if (!title) {
       throw new AppError(400, 'Título do grupo deve ser preenchido');
     }

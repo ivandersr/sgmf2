@@ -1,36 +1,14 @@
 import { Router } from 'express';
-import { getRepository } from 'typeorm';
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
-import AthleteGroup from '@modules/athletegroups/infra/typeorm/entities/AthleteGroup';
-import CreateAthleteGroupService from '@modules/athletegroups/services/CreateAthleteGroupService';
+import AthleteGroupsController from '../controllers/AthleteGroupsController';
 
 const athleteGroupsRouter = Router();
+const athleteGroupsController = new AthleteGroupsController();
 
 athleteGroupsRouter.use(ensureAuthenticated);
 
-athleteGroupsRouter.get('/', async (request, response) => {
-  const athleteGroupsRepository = getRepository(AthleteGroup);
+athleteGroupsRouter.get('/', athleteGroupsController.index);
 
-  const athleteGroups = await athleteGroupsRepository.find();
-
-  return response.json(athleteGroups);
-});
-
-athleteGroupsRouter.post('/', async (request, response) => {
-  try {
-    const { title, description } = request.body;
-
-    const createAthleteGroup = new CreateAthleteGroupService();
-
-    const athleteGroup = await createAthleteGroup.execute({
-      title,
-      description,
-    });
-
-    return response.status(201).json(athleteGroup);
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
-});
+athleteGroupsRouter.post('/', athleteGroupsController.create);
 
 export default athleteGroupsRouter;

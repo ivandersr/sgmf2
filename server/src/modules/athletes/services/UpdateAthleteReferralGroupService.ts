@@ -1,14 +1,14 @@
 import ReferralGroup from '@modules/referralgroups/infra/typeorm/entities/ReferralGroup';
 import AppError from '@shared/errors/AppError';
 import { getRepository } from 'typeorm';
+import IUpdateAthleteRefGroupDTO from '../dtos/IUpdateAthleteRefGroupDTO';
 import Athlete from '../infra/typeorm/entities/Athlete';
 
-interface IRequest {
-  id: string;
-  referralGroupId: string;
-}
 class UpdateAthleteReferralGroupService {
-  public async execute({ id, referralGroupId }: IRequest): Promise<Athlete> {
+  public async execute({
+    id,
+    referralGroupId,
+  }: IUpdateAthleteRefGroupDTO): Promise<Athlete> {
     const athletesRepository = getRepository(Athlete);
     const referralGroupsRepository = getRepository(ReferralGroup);
 

@@ -1,18 +1,14 @@
 import Subscription from '@modules/subscriptions/infra/typeorm/entities/Subscription';
 import AppError from '@shared/errors/AppError';
 import { getRepository } from 'typeorm';
+import IUpdateAthleteSubscriptionDTO from '../dtos/IUpdateAthleteSubscriptionDTO';
 import Athlete from '../infra/typeorm/entities/Athlete';
-
-interface IRequest {
-  athlete_id: string;
-  subscription_id: string;
-}
 
 class UpdateAthleteSubscriptionService {
   public async execute({
     athlete_id,
     subscription_id,
-  }: IRequest): Promise<Athlete> {
+  }: IUpdateAthleteSubscriptionDTO): Promise<Athlete> {
     const athletesRepository = getRepository(Athlete);
     const subscriptionsRepository = getRepository(Subscription);
 

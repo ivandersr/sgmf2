@@ -1,13 +1,10 @@
 import AppError from '@shared/errors/AppError';
 import { getRepository } from 'typeorm';
+import IFindAthleteDTO from '../dtos/IFindAthleteDTO';
 import Athlete from '../infra/typeorm/entities/Athlete';
 
-interface IRequest {
-  id: string;
-}
-
 class FindAthleteService {
-  public async execute({ id }: IRequest): Promise<Athlete> {
+  public async execute({ id }: IFindAthleteDTO): Promise<Athlete> {
     const athletesRepository = getRepository(Athlete);
 
     const athlete = await athletesRepository.findOne(id);

@@ -1,14 +1,13 @@
 import AppError from '@shared/errors/AppError';
 import { getRepository } from 'typeorm';
+import IUpdateAthleteActiveFieldDTO from '../dtos/IUpdateAthleteActiveFieldDTO';
 import Athlete from '../infra/typeorm/entities/Athlete';
 
-interface IRequest {
-  athlete_id: string;
-  active: boolean;
-}
-
 class UpdateAthleteActiveFieldService {
-  public async execute({ athlete_id, active }: IRequest): Promise<Athlete> {
+  public async execute({
+    athlete_id,
+    active,
+  }: IUpdateAthleteActiveFieldDTO): Promise<Athlete> {
     const athletesRepository = getRepository(Athlete);
 
     const athlete = await athletesRepository.findOne(athlete_id);

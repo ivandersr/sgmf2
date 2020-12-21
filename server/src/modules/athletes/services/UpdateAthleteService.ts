@@ -2,13 +2,7 @@ import AppError from '@shared/errors/AppError';
 import { getRepository } from 'typeorm';
 import { parseISO } from 'date-fns';
 import Athlete from '../infra/typeorm/entities/Athlete';
-
-interface IRequest {
-  id: string;
-  name: string;
-  birthDate: string;
-  phoneNumber: string;
-}
+import IUpdateAthleteDataDTO from '../dtos/IUpdateAthleteDataDTO';
 
 class UpdateAthleteService {
   public async execute({
@@ -16,7 +10,7 @@ class UpdateAthleteService {
     name,
     birthDate,
     phoneNumber,
-  }: IRequest): Promise<Athlete> {
+  }: IUpdateAthleteDataDTO): Promise<Athlete> {
     const athletesRepository = getRepository(Athlete);
 
     const athlete = await athletesRepository.findOne(id);

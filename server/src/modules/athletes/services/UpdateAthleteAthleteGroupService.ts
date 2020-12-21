@@ -2,17 +2,13 @@ import { getRepository } from 'typeorm';
 import AthleteGroup from '@modules/athletegroups/infra/typeorm/entities/AthleteGroup';
 import AppError from '@shared/errors/AppError';
 import Athlete from '../infra/typeorm/entities/Athlete';
-
-interface IRequest {
-  athlete_id: string;
-  athlete_group_id: string;
-}
+import IUpdateAthleteGroupDTO from '../dtos/IUpdateAthleteGroupDTO';
 
 class UpdateAthleteAthleteGroupService {
   public async execute({
     athlete_id,
     athlete_group_id,
-  }: IRequest): Promise<Athlete> {
+  }: IUpdateAthleteGroupDTO): Promise<Athlete> {
     const athletesRepository = getRepository(Athlete);
     const athleteGroupsRepository = getRepository(AthleteGroup);
 

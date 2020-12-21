@@ -1,17 +1,7 @@
 import { getRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
+import { IRequest, IResponse } from '../dtos/IListAthletesWithPaginationDTO';
 import Athlete from '../infra/typeorm/entities/Athlete';
-
-interface IRequest {
-  page: string;
-  pageSize: string;
-}
-
-interface IResponse {
-  athletes: Athlete[];
-  total: number;
-  pages: number;
-}
 
 class ListAthletesService {
   public async execute({ page, pageSize }: IRequest): Promise<IResponse> {

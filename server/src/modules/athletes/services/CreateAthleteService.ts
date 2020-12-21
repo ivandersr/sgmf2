@@ -4,15 +4,7 @@ import AppError from '@shared/errors/AppError';
 import Subscription from '@modules/subscriptions/infra/typeorm/entities/Subscription';
 import AthleteGroup from '@modules/athletegroups/infra/typeorm/entities/AthleteGroup';
 import Athlete from '../infra/typeorm/entities/Athlete';
-
-interface IRequest {
-  name: string;
-  birthDate: string;
-  phoneNumber: string;
-  subscription_id: string;
-  athlete_group_id: string;
-  referral_group_id?: string;
-}
+import ICreateAthleteDTO from '../dtos/ICreateAthleteDTO';
 
 class CreateAthleteService {
   public async execute({
@@ -21,7 +13,7 @@ class CreateAthleteService {
     phoneNumber,
     subscription_id,
     athlete_group_id,
-  }: IRequest): Promise<Athlete> {
+  }: ICreateAthleteDTO): Promise<Athlete> {
     if (!name) {
       throw new AppError(400, 'Nome não pode estar vazio (name).');
     }

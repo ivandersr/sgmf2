@@ -1,39 +1,21 @@
 import { Router } from 'express';
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
-import ListAthletesByReferralGroupService from '@modules/athletes/services/ListAthletesByReferralGroupService';
-import ListActiveAthletesByReferralGroupService from '@modules/athletes/services/ListActiveAthletesByReferralGroupService';
 import ReferralGroupsController from '../controllers/ReferralGroupsController';
+import ReferralGroupAthletesController from '../controllers/ReferralGroupAthletesController';
+import RefGroupActiveAthletesController from '../controllers/RefGroupActiveAthletesController';
 
 const referralGroupsRouter = Router();
 const referralGroupsController = new ReferralGroupsController();
+const referralGroupAthletesController = new ReferralGroupAthletesController();
+const refGroupActiveAthletesController = new RefGroupActiveAthletesController();
 
 referralGroupsRouter.use(ensureAuthenticated);
 
 referralGroupsRouter.get('/', referralGroupsController.index);
 
-referralGroupsRouter.get('/:id/all', async (request, response) => {
-  const { id } = request.params;
+referralGroupsRouter.get('/:id/all', referralGroupAthletesController.index);
 
-  const listByReferralGroup = new ListAthletesByReferralGroupService();
-
-  const activeByReferral = await listByReferralGroup.execute({
-    referralGroupId: id,
-  });
-
-  return response.status(200).json(activeByReferral);
-});
-
-referralGroupsRouter.get('/:id/active', async (request, response) => {
-  const { id } = request.params;
-
-  const listActiveByReferral = new ListActiveAthletesByReferralGroupService();
-
-  const athletesByReferral = await listActiveByReferral.execute({
-    referral_group_id: id,
-  });
-
-  return response.status(200).json(athletesByReferral);
-});
+referralGroupsRouter.get('/:id/active', refGroupActiveAthletesController.index);
 
 referralGroupsRouter.post('/', referralGroupsController.create);
 

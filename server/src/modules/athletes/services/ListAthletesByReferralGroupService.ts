@@ -1,17 +1,16 @@
 import { getRepository } from 'typeorm';
+import IListAthletesByReferralGroupDTO from '../dtos/IListAthletesByReferralGroupDTO';
 
 import Athlete from '../infra/typeorm/entities/Athlete';
 
-interface IRequest {
-  referralGroupId: string;
-}
-
 class ListAthletesByReferralGroupService {
-  public async execute({ referralGroupId }: IRequest): Promise<Athlete[]> {
+  public async execute({
+    referral_group_id,
+  }: IListAthletesByReferralGroupDTO): Promise<Athlete[]> {
     const athletesRepository = getRepository(Athlete);
 
     const athletes = await athletesRepository.find({
-      where: { referral_group_id: referralGroupId },
+      where: { referral_group_id },
     });
 
     return athletes;
