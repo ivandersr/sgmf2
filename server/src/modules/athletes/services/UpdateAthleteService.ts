@@ -23,9 +23,11 @@ class UpdateAthleteService {
       throw new AppError(400, 'Informe nome, data de nascimento e telefone');
     }
 
-    athlete.name = name;
-    athlete.birthDate = parseISO(birthDate);
-    athlete.phoneNumber = phoneNumber;
+    Object.assign(athlete, {
+      name,
+      birthDate: parseISO(birthDate),
+      phoneNumber,
+    });
 
     await athletesRepository.save(athlete);
 

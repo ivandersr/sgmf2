@@ -14,21 +14,13 @@ const athleteSubscriptionsController = new AthleteSubscriptionsController();
 const athleteAthleteGroupsController = new AthleteAthleteGroupsController();
 
 athletesRouter.use(ensureAuthenticated);
-
 athletesRouter.get('/', athletesController.index);
-
 athletesRouter.get('/:id', athletesController.find);
-
 athletesRouter.post('/', athletesController.create);
-
 athletesRouter.put('/:id', athletesController.update);
-
 athletesRouter.put('/referral/:id', athleteRefGroupsController.update);
-
 athletesRouter.put('/active/:id', athleteStatusController.update);
-
 athletesRouter.put('/subscription/:id', athleteSubscriptionsController.update);
-
 athletesRouter.put('/group/:id', athleteAthleteGroupsController.update);
 
 export default athletesRouter;

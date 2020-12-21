@@ -10,13 +10,9 @@ const referralGroupAthletesController = new ReferralGroupAthletesController();
 const refGroupActiveAthletesController = new RefGroupActiveAthletesController();
 
 referralGroupsRouter.use(ensureAuthenticated);
-
 referralGroupsRouter.get('/', referralGroupsController.index);
-
 referralGroupsRouter.get('/:id/all', referralGroupAthletesController.index);
-
 referralGroupsRouter.get('/:id/active', refGroupActiveAthletesController.index);
-
 referralGroupsRouter.post('/', referralGroupsController.create);
 
 export default referralGroupsRouter;

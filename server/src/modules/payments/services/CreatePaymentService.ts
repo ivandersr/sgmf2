@@ -3,13 +3,7 @@ import { parseISO } from 'date-fns';
 import AppError from '@shared/errors/AppError';
 import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
 import Payment from '../infra/typeorm/entities/Payment';
-
-interface IRequest {
-  value: number;
-  paymentDate: string;
-  monthsPaid: number;
-  athlete_id: string;
-}
+import ICreatePaymentDTO from '../dtos/ICreatePaymentDTO';
 
 class CreatePaymentService {
   public async execute({
@@ -17,7 +11,7 @@ class CreatePaymentService {
     paymentDate,
     monthsPaid,
     athlete_id,
-  }: IRequest): Promise<Payment> {
+  }: ICreatePaymentDTO): Promise<Payment> {
     if (!value) {
       throw new AppError(400, 'Valor do pagamento não deve ser vazio');
     }

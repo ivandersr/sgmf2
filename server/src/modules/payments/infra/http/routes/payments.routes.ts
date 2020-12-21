@@ -1,21 +1,16 @@
 import { Router } from 'express';
-import CreatePaymentService from '@modules/payments/services/CreatePaymentService';
+import PaymentsByDateAndAthleteController from '../controllers/PaymentsByDateAndAthleteController';
+import PaymentsByDateController from '../controllers/PaymentsByDateController';
+import PaymentsController from '../controllers/PaymentsController';
 
 const paymentsRouter = Router();
+const paymentsController = new PaymentsController();
+const byDateController = new PaymentsByDateController();
+const byDateAndAthleteController = new PaymentsByDateAndAthleteController();
 
-paymentsRouter.post('/', async (request, response) => {
-  const { value, paymentDate, monthsPaid, athlete_id } = request.body;
-
-  const createPayment = new CreatePaymentService();
-
-  const payment = await createPayment.execute({
-    value,
-    paymentDate,
-    monthsPaid,
-    athlete_id,
-  });
-
-  return response.status(201).json(payment);
-});
+paymentsRouter.post('/', paymentsController.create);
+paymentsRouter.get('/byathlete', paymentsController.find);
+paymentsRouter.get('/bydate', byDateController.find);
+paymentsRouter.get('/bydateandathlete', byDateAndAthleteController.find);
 
 export default paymentsRouter;

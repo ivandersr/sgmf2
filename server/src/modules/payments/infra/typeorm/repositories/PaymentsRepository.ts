@@ -13,6 +13,25 @@ class PaymentsRepository
 
     return findPayment;
   }
+
+  public async findByDateAndAthlete(
+    paymentDate: Date,
+    athlete_id: string,
+  ): Promise<Payment[]> {
+    const findPayment = await this.find({
+      where: { paymentDate, athlete_id },
+    });
+
+    return findPayment;
+  }
+
+  public async findByAthlete(athlete_id: string): Promise<Payment[]> {
+    const findPayment = await this.find({
+      where: { athlete_id },
+    });
+
+    return findPayment;
+  }
 }
 
 export default PaymentsRepository;
