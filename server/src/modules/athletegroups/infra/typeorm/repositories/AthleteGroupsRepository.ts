@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 import ICreateAthleteGroupDTO from '@modules/athletegroups/dtos/ICreateAthleteGroupDTO';
 import IAthleteGroupsRepository from '@modules/athletegroups/repositories/IAthleteGroupsRepository';
+import IFindAthleteGroupDTO from '@modules/athletegroups/dtos/IFindAthleteGroupDTO';
 import AthleteGroup from '../entities/AthleteGroup';
 
 class AthleteGroupsRepository implements IAthleteGroupsRepository {
@@ -14,6 +15,14 @@ class AthleteGroupsRepository implements IAthleteGroupsRepository {
     const athleteGroups = await this.ormRepository.find();
 
     return athleteGroups;
+  }
+
+  public async findOne(
+    data: IFindAthleteGroupDTO
+  ): Promise<AthleteGroup | undefined> {
+    const athleteGroup = this.ormRepository.findOne(data);
+
+    return athleteGroup;
   }
 
   public async create({

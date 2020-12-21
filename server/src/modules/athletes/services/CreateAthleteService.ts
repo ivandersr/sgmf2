@@ -1,9 +1,8 @@
-import { getRepository } from 'typeorm';
 import { parseISO } from 'date-fns';
 import AppError from '@shared/errors/AppError';
-import AthleteGroup from '@modules/athletegroups/infra/typeorm/entities/AthleteGroup';
 import { inject, injectable } from 'tsyringe';
 import ISubscriptionsRepository from '@modules/subscriptions/repositories/ISubscriptionsRepository';
+import IAthleteGroupsRepository from '@modules/athletegroups/repositories/IAthleteGroupsRepository';
 import Athlete from '../infra/typeorm/entities/Athlete';
 import ICreateAthleteServiceDTO from '../dtos/ICreateAthleteServiceDTO';
 import IAthletesRepository from '../repositories/IAthletesRepository';
@@ -16,6 +15,9 @@ class CreateAthleteService {
 
     @inject('SubscriptionsRepository')
     private subscriptionsRepository: ISubscriptionsRepository,
+
+    @inject('AthleteGroupsRepository')
+    private athleteGroupsRepository: IAthleteGroupsRepository,
   ) { }
 
   public async execute({
@@ -49,13 +51,11 @@ class CreateAthleteService {
         'Indique a qual grupo o aluno pertence (athlete_group_id).',
       );
     }
-    const athleteGroupsRepository = getRepository(AthleteGroup);
-
     const subscription = await this.subscriptionsRepository.findOne(
       { id: subscription_id }
     );
-    const athleteGroup = await athleteGroupsRepository.findOne(
-      athlete_group_id,
+    const athleteGroup = await this.athleteGroupsRepository.findOne(
+      { id: athlete_group_id }
     );
 
     if (!subscription) {
