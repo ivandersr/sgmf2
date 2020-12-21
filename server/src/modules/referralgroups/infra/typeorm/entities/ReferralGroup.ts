@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
 
@@ -17,6 +19,12 @@ class ReferralGroup {
 
   @Column()
   title: string;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @ManyToOne(() => Athlete)
   @JoinColumn({ name: 'referral_id' })
