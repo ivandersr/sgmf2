@@ -6,8 +6,8 @@ import Payment from '../entities/Payment';
 class PaymentsRepository
   extends Repository<Payment>
   implements IPaymentsRepository {
-  public async findByDate(paymentDate: Date): Promise<Payment | undefined> {
-    const findPayment = await this.findOne({
+  public async findByDate(paymentDate: Date): Promise<Payment[]> {
+    const findPayment = await this.find({
       where: { paymentDate },
     });
 

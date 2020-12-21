@@ -75,13 +75,13 @@ athletesRouter.put('/:id', async (request, response) => {
 
 athletesRouter.put('/referral/:id', async (request, response) => {
   const { id } = request.params;
-  const { referralGroupId } = request.body;
+  const { referral_group_id } = request.body;
 
   const updateReferral = new UpdateAthleteReferralGroupService();
 
   const updatedAthlete = await updateReferral.execute({
     id,
-    referralGroupId,
+    referral_group_id,
   });
 
   return response.status(200).json(updatedAthlete);

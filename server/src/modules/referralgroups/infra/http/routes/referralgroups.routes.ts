@@ -4,6 +4,7 @@ import ReferralGroup from '@modules/referralgroups/infra/typeorm/entities/Referr
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 import CreateReferralGroupService from '@modules/referralgroups/services/CreateReferralGroupService';
 import ListAthletesByReferralGroupService from '@modules/athletes/services/ListAthletesByReferralGroupService';
+import ListActiveAthletesByReferralGroupService from '@modules/athletes/services/ListActiveAthletesByReferralGroupService';
 
 const referralGroupsRouter = Router();
 
@@ -17,13 +18,25 @@ referralGroupsRouter.get('/', async (request, response) => {
   return response.json(referralGroups);
 });
 
-referralGroupsRouter.get('/athletes', async (request, response) => {
-  const { referralGroupId } = request.body;
+referralGroupsRouter.get('/:id/all', async (request, response) => {
+  const { id } = request.params;
 
   const listByReferralGroup = new ListAthletesByReferralGroupService();
 
-  const athletesByReferral = await listByReferralGroup.execute({
-    referralGroupId,
+  const activeByReferral = await listByReferralGroup.execute({
+    referralGroupId: id,
+  });
+
+  return response.status(200).json(activeByReferral);
+});
+
+referralGroupsRouter.get('/:id/active', async (request, response) => {
+  const { id } = request.params;
+
+  const listActiveByReferral = new ListActiveAthletesByReferralGroupService();
+
+  const athletesByReferral = await listActiveByReferral.execute({
+    referral_group_id: id,
   });
 
   return response.status(200).json(athletesByReferral);
