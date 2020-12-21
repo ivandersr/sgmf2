@@ -1,19 +1,30 @@
 import { getRepository } from 'typeorm';
 import { parseISO } from 'date-fns';
 import AppError from '@shared/errors/AppError';
-import Subscription from '@modules/subscriptions/infra/typeorm/entities/Subscription';
 import AthleteGroup from '@modules/athletegroups/infra/typeorm/entities/AthleteGroup';
+import { inject, injectable } from 'tsyringe';
+import ISubscriptionsRepository from '@modules/subscriptions/repositories/ISubscriptionsRepository';
 import Athlete from '../infra/typeorm/entities/Athlete';
-import ICreateAthleteDTO from '../dtos/ICreateAthleteDTO';
+import ICreateAthleteServiceDTO from '../dtos/ICreateAthleteServiceDTO';
+import IAthletesRepository from '../repositories/IAthletesRepository';
 
+@injectable()
 class CreateAthleteService {
+  constructor(
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
+
+    @inject('SubscriptionsRepository')
+    private subscriptionsRepository: ISubscriptionsRepository,
+  ) { }
+
   public async execute({
     name,
     birthDate,
     phoneNumber,
     subscription_id,
     athlete_group_id,
-  }: ICreateAthleteDTO): Promise<Athlete> {
+  }: ICreateAthleteServiceDTO): Promise<Athlete> {
     if (!name) {
       throw new AppError(400, 'Nome não pode estar vazio (name).');
     }
@@ -38,25 +49,30 @@ class CreateAthleteService {
         'Indique a qual grupo o aluno pertence (athlete_group_id).',
       );
     }
-
-    const athletesRepository = getRepository(Athlete);
-    const subscriptionsRepository = getRepository(Subscription);
     const athleteGroupsRepository = getRepository(AthleteGroup);
 
-    const subscription = await subscriptionsRepository.findOne(subscription_id);
+    const subscription = await this.subscriptionsRepository.findOne(
+      { id: subscription_id }
+    );
     const athleteGroup = await athleteGroupsRepository.findOne(
       athlete_group_id,
     );
 
-    const athlete = athletesRepository.create({
+    if (!subscription) {
+      throw new AppError(404, 'Plano não encontrado');
+    }
+
+    if (!athleteGroup) {
+      throw new AppError(404, 'Grupo não encontrado');
+    }
+
+    const athlete = await this.athletesRepository.create({
       name,
       birthDate: parseISO(birthDate),
       phoneNumber,
       subscription,
       athleteGroup,
     });
-
-    await athletesRepository.save(athlete);
 
     return athlete;
   }

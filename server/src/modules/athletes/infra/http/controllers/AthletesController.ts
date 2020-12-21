@@ -3,6 +3,7 @@ import CreateAthleteService from '@modules/athletes/services/CreateAthleteServic
 import FindAthleteService from '@modules/athletes/services/FindAthleteService';
 import ListAthletesService from '@modules/athletes/services/ListAthletesService';
 import UpdateAthleteService from '@modules/athletes/services/UpdateAthleteService';
+import { container } from 'tsyringe';
 
 class AthletesController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -26,7 +27,7 @@ class AthletesController {
       athlete_group_id,
     } = request.body;
 
-    const createAthleteService = new CreateAthleteService();
+    const createAthleteService = container.resolve(CreateAthleteService);
     const athlete = await createAthleteService.execute({
       name,
       birthDate,
@@ -39,7 +40,7 @@ class AthletesController {
   }
 
   public async find(request: Request, response: Response): Promise<Response> {
-    const findAthlete = new FindAthleteService();
+    const findAthlete = container.resolve(FindAthleteService);
     const { id } = request.params;
 
     const athlete = await findAthlete.execute({

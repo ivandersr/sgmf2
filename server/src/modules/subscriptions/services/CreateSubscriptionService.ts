@@ -1,9 +1,16 @@
-import { getRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
+import { injectable, inject } from 'tsyringe';
 import Subscription from '../infra/typeorm/entities/Subscription';
 import ICreateSubscriptionDTO from '../dtos/ICreateSubscriptionDTO';
+import ISubscriptionsRepository from '../repositories/ISubscriptionsRepository';
 
+@injectable()
 class CreateSubscriptionService {
+  constructor(
+    @inject('SubscriptionsRepository')
+    private subscriptionsRepository: ISubscriptionsRepository
+  ) { }
+
   public async execute({
     title,
     value,
@@ -16,14 +23,10 @@ class CreateSubscriptionService {
       throw new AppError(400, 'Valor do plano não deve ser vazio.');
     }
 
-    const subscriptionsRepository = getRepository(Subscription);
-
-    const subscription = subscriptionsRepository.create({
+    const subscription = await this.subscriptionsRepository.create({
       title,
       value,
     });
-
-    await subscriptionsRepository.save(subscription);
 
     return subscription;
   }

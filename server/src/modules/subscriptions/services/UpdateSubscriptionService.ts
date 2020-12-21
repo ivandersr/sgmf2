@@ -1,17 +1,22 @@
 import AppError from '@shared/errors/AppError';
-import { getRepository } from 'typeorm';
+import { inject, injectable } from 'tsyringe';
 import IUpdateSubscriptionDTO from '../dtos/IUpdateSubscriptionDTO';
 import Subscription from '../infra/typeorm/entities/Subscription';
+import ISubscriptionsRepository from '../repositories/ISubscriptionsRepository';
 
+@injectable()
 class UpdateSubscriptionService {
+  constructor(
+    @inject('SubscriptionsRepository')
+    private subscriptionsRepository: ISubscriptionsRepository
+  ) { }
+
   public async execute({
     id,
     title,
     value,
   }: IUpdateSubscriptionDTO): Promise<Subscription> {
-    const subscriptionsRepository = getRepository(Subscription);
-
-    const subscription = await subscriptionsRepository.findOne(id);
+    const subscription = await this.subscriptionsRepository.findOne({ id });
 
     if (!subscription) {
       throw new AppError(404, 'Plano não encontrado');
@@ -19,7 +24,7 @@ class UpdateSubscriptionService {
 
     Object.assign(subscription, { title, value });
 
-    await subscriptionsRepository.save(subscription);
+    await this.subscriptionsRepository.save(subscription);
 
     return subscription;
   }

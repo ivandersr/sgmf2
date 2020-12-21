@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import CreateAthleteGroupService from '@modules/athletegroups/services/CreateAthleteGroupService';
-import FindAthleteGroupsService from '@modules/athletegroups/services/Find=AtheteGroupsService';
+import FindAthleteGroupsService from '@modules/athletegroups/services/FindAtheteGroupsService';
 
 class AthleteGroupsController {
   public async index(request: Request, response: Response): Promise<Response> {

@@ -1,8 +1,10 @@
+import AthleteGroup from "@modules/athletegroups/infra/typeorm/entities/AthleteGroup";
+import Subscription from "@modules/subscriptions/infra/typeorm/entities/Subscription";
+
 export default interface ICreateAthleteDTO {
   name: string;
-  birthDate: string;
+  birthDate: Date;
   phoneNumber: string;
-  subscription_id: string;
-  athlete_group_id: string;
-  referral_group_id?: string;
+  subscription: Subscription;
+  athleteGroup: AthleteGroup;
 }

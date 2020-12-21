@@ -1,20 +1,24 @@
 import AppError from '@shared/errors/AppError';
-import { getRepository } from 'typeorm';
+import { inject, injectable } from 'tsyringe';
 import {
   IRequest,
   IResponse,
 } from '../dtos/IListSubscriptionsWithPaginationDTO';
-import Subscription from '../infra/typeorm/entities/Subscription';
+import ISubscriptionsRepository from '../repositories/ISubscriptionsRepository';
 
+@injectable()
 class ListSubscriptionsService {
-  public async execute({ page, pageSize }: IRequest): Promise<IResponse> {
-    const subscriptionsRepository = getRepository(Subscription);
+  constructor(
+    @inject('SubscriptionsRepository')
+    private subscriptionsRepository: ISubscriptionsRepository,
+  ) { }
 
+  public async execute({ page, pageSize }: IRequest): Promise<IResponse> {
     if (!page || !pageSize) {
       const [
         subscriptions,
         total,
-      ] = await subscriptionsRepository.findAndCount();
+      ] = await this.subscriptionsRepository.findAndCount();
       return { subscriptions, total, pages: 1 };
     }
 
@@ -22,13 +26,14 @@ class ListSubscriptionsService {
       throw new AppError(400, 'A página e seu tamanho devem ser numéricos');
     }
 
-    const [subscriptions, total] = await subscriptionsRepository.findAndCount({
-      skip: Number(page) * Number(pageSize),
-      take: Number(pageSize),
-      order: {
-        title: 'ASC',
-      },
-    });
+    const [subscriptions, total] = await this.subscriptionsRepository
+      .findAndCount({
+        skip: Number(page) * Number(pageSize),
+        take: Number(pageSize),
+        order: {
+          title: 'ASC',
+        },
+      });
 
     const pages = Math.ceil(total / Number(pageSize));
 

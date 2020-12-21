@@ -1,13 +1,18 @@
 import AppError from '@shared/errors/AppError';
-import { getRepository } from 'typeorm';
+import { inject, injectable } from 'tsyringe';
 import IFindAthleteDTO from '../dtos/IFindAthleteDTO';
 import Athlete from '../infra/typeorm/entities/Athlete';
+import IAthletesRepository from '../repositories/IAthletesRepository';
 
+@injectable()
 class FindAthleteService {
-  public async execute({ id }: IFindAthleteDTO): Promise<Athlete> {
-    const athletesRepository = getRepository(Athlete);
+  constructor(
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
+  ) { }
 
-    const athlete = await athletesRepository.findOne(id);
+  public async execute({ id }: IFindAthleteDTO): Promise<Athlete> {
+    const athlete = await this.athletesRepository.findOne({ id });
 
     if (!athlete) {
       throw new AppError(404, 'Aluno não encontrado');
