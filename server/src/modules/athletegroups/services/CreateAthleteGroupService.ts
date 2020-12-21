@@ -1,9 +1,16 @@
-import { getRepository } from 'typeorm';
+import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import AthleteGroup from '../infra/typeorm/entities/AthleteGroup';
 import ICreateAthleteGroupDTO from '../dtos/ICreateAthleteGroupDTO';
+import IAthleteGroupsRepository from '../repositories/IAthleteGroupsRepository';
 
+@injectable()
 class CreateAthleteGroupService {
+  constructor(
+    @inject('AthleteGroupsRepository')
+    private athleteGroupsRepository: IAthleteGroupsRepository,
+  ) { }
+
   public async execute({
     title,
     description,
@@ -16,14 +23,10 @@ class CreateAthleteGroupService {
       throw new AppError(400, 'Descrição do grupo deve ser preenchida.');
     }
 
-    const athleteGroupsRepository = getRepository(AthleteGroup);
-
-    const athleteGroup = athleteGroupsRepository.create({
+    const athleteGroup = await this.athleteGroupsRepository.create({
       title,
       description,
     });
-
-    await athleteGroupsRepository.save(athleteGroup);
 
     return athleteGroup;
   }

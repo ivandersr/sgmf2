@@ -1,21 +1,21 @@
-import CreateAthleteGroupService from '@modules/athletegroups/services/CreateAthleteGroupService';
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
-import AthleteGroup from '../../typeorm/entities/AthleteGroup';
+import { container } from 'tsyringe';
+import CreateAthleteGroupService from '@modules/athletegroups/services/CreateAthleteGroupService';
+import FindAthleteGroupsService from '@modules/athletegroups/services/Find=AtheteGroupsService';
 
 class AthleteGroupsController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const athleteGroupsRepository = getRepository(AthleteGroup);
+    const findAthleteGroups = container.resolve(FindAthleteGroupsService);
 
-    const athleteGroups = await athleteGroupsRepository.find();
+    const athleteGroups = await findAthleteGroups.execute();
 
-    return response.json(athleteGroups);
+    return response.status(200).json(athleteGroups);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { title, description } = request.body;
 
-    const createAthleteGroup = new CreateAthleteGroupService();
+    const createAthleteGroup = container.resolve(CreateAthleteGroupService);
 
     const athleteGroup = await createAthleteGroup.execute({
       title,

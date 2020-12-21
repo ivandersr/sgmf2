@@ -6,4 +6,5 @@ export default interface IPaymentsRepository {
     paymentDate: Date,
     athlete_id: string,
   ): Promise<Payment[]>;
+  findByAthlete(athlete_id: string): Promise<Payment[]>;
 }

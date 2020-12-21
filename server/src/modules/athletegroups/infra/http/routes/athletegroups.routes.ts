@@ -6,9 +6,7 @@ const athleteGroupsRouter = Router();
 const athleteGroupsController = new AthleteGroupsController();
 
 athleteGroupsRouter.use(ensureAuthenticated);
-
 athleteGroupsRouter.get('/', athleteGroupsController.index);
-
 athleteGroupsRouter.post('/', athleteGroupsController.create);
 
 export default athleteGroupsRouter;
