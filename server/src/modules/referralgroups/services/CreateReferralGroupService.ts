@@ -1,14 +1,23 @@
-import { getRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
-import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
+import { inject, injectable } from 'tsyringe';
+import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
 import ReferralGroup from '../infra/typeorm/entities/ReferralGroup';
+import ICreateReferralGroupServiceDTO from '../dtos/ICreateReferralGroupServiceDTO';
+import IReferralGroupsRepository from '../repositories/IReferralGroupsRepository';
 
-interface IRequest {
-
-}
-
+@injectable()
 class CreateReferralGroupService {
-  public async execute({ referral_id }: IRequest): Promise<ReferralGroup> {
+  constructor(
+    @inject('ReferralGroupsRepository')
+    private referralGroupsRepository: IReferralGroupsRepository,
+
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
+  ) { }
+
+  public async execute(
+    { referral_id }: ICreateReferralGroupServiceDTO
+  ): Promise<ReferralGroup> {
     if (!referral_id) {
       throw new AppError(
         400,
@@ -16,10 +25,7 @@ class CreateReferralGroupService {
       );
     }
 
-    const athletesRepository = getRepository(Athlete);
-    const referralGroupsRepository = getRepository(ReferralGroup);
-
-    const athlete = await athletesRepository.findOne(referral_id);
+    const athlete = await this.athletesRepository.findOne({ id: referral_id });
 
     if (!athlete) {
       throw new AppError(404, 'Aluno(a) não encontrado(a).');
@@ -27,15 +33,14 @@ class CreateReferralGroupService {
 
     const { name } = athlete;
 
-    const referralGroup = referralGroupsRepository.create({
+    const referralGroup = await this.referralGroupsRepository.create({
       title: name,
       referral: athlete,
     });
 
     athlete.referralGroup = referralGroup;
 
-    await referralGroupsRepository.save(referralGroup);
-    await athletesRepository.save(athlete);
+    await this.athletesRepository.save(athlete);
 
     return referralGroup;
   }

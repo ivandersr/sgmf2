@@ -1,4 +1,5 @@
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import IFindByLoginDTO from '@modules/users/dtos/IFindByLoginDTO';
 import IFindUserDTO from '@modules/users/dtos/IFindUserDTO';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import { getRepository, Repository } from 'typeorm';
@@ -13,6 +14,18 @@ class UsersRepository implements IUsersRepository {
 
   public async findOne({ user_id }: IFindUserDTO): Promise<User | undefined> {
     const user = await this.ormRepository.findOne(user_id);
+
+    return user;
+  }
+
+  public async findByLogin(
+    { login }: IFindByLoginDTO
+  ): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: {
+        login,
+      }
+    });
 
     return user;
   }

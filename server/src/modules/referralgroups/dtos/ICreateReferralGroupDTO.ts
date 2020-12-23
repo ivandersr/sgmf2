@@ -1,3 +1,6 @@
+import Athlete from "@modules/athletes/infra/typeorm/entities/Athlete";
+
 export default interface ICreateReferralGroupDTO {
-  referral_id: string;
+  title: string;
+  referral: Athlete;
 }
