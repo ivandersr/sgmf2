@@ -1,25 +1,32 @@
-import { getRepository } from 'typeorm';
-import AthleteGroup from '@modules/athletegroups/infra/typeorm/entities/AthleteGroup';
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import Athlete from '../infra/typeorm/entities/Athlete';
+import IAthleteGroupsRepository from '@modules/athletegroups/repositories/IAthleteGroupsRepository';
+import IAthletesRepository from '../repositories/IAthletesRepository';
 import IUpdateAthleteGroupDTO from '../dtos/IUpdateAthleteGroupDTO';
+import Athlete from '../infra/typeorm/entities/Athlete';
 
+@injectable()
 class UpdateAthleteAthleteGroupService {
+  constructor(
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
+
+    @inject('AthleteGroupsRepository')
+    private athleteGroupsRepository: IAthleteGroupsRepository,
+  ) { }
+
   public async execute({
     athlete_id,
     athlete_group_id,
   }: IUpdateAthleteGroupDTO): Promise<Athlete> {
-    const athletesRepository = getRepository(Athlete);
-    const athleteGroupsRepository = getRepository(AthleteGroup);
-
-    const athlete = await athletesRepository.findOne(athlete_id);
+    const athlete = await this.athletesRepository.findOne({ id: athlete_id });
 
     if (!athlete) {
       throw new AppError(404, 'Aluno não encontrado');
     }
 
-    const athleteGroup = await athleteGroupsRepository.findOne(
-      athlete_group_id,
+    const athleteGroup = await this.athleteGroupsRepository.findOne(
+      { id: athlete_group_id },
     );
 
     if (!athleteGroup) {
@@ -28,7 +35,7 @@ class UpdateAthleteAthleteGroupService {
 
     athlete.athleteGroup = athleteGroup;
 
-    await athletesRepository.save(athlete);
+    await this.athletesRepository.save(athlete);
 
     return athlete;
   }

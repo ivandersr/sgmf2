@@ -1,32 +1,41 @@
-import ReferralGroup from '@modules/referralgroups/infra/typeorm/entities/ReferralGroup';
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import { getRepository } from 'typeorm';
+import IReferralGroupsRepository from '@modules/referralgroups/repositories/IReferralGroupsRepository';
 import IUpdateAthleteRefGroupDTO from '../dtos/IUpdateAthleteRefGroupDTO';
+import IAthletesRepository from '../repositories/IAthletesRepository';
 import Athlete from '../infra/typeorm/entities/Athlete';
 
+@injectable()
 class UpdateAthleteReferralGroupService {
+  constructor(
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
+
+    @inject('ReferralGroupsRepository')
+    private referralGroupsRepository: IReferralGroupsRepository,
+  ) { }
+
   public async execute({
     id,
-    referralGroupId,
+    referral_group_id,
   }: IUpdateAthleteRefGroupDTO): Promise<Athlete> {
-    const athletesRepository = getRepository(Athlete);
-    const referralGroupsRepository = getRepository(ReferralGroup);
-
-    const athlete = await athletesRepository.findOne(id);
+    const athlete = await this.athletesRepository.findOne({ id });
 
     if (!athlete) {
       throw new AppError(404, 'Aluno não encontrado');
     }
 
-    const referralGroup = referralGroupsRepository.findOne(referralGroupId);
+    const referralGroup = this.referralGroupsRepository.findOne({
+      referral_group_id
+    });
 
     if (!referralGroup) {
       throw new AppError(404, 'Grupo de indicações não encontrado');
     }
 
-    athlete.referral_group_id = referralGroupId;
+    athlete.referral_group_id = referral_group_id;
 
-    await athletesRepository.save(athlete);
+    await this.athletesRepository.save(athlete);
 
     return athlete;
   }

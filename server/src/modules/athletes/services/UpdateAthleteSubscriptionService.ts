@@ -1,24 +1,33 @@
-import Subscription from '@modules/subscriptions/infra/typeorm/entities/Subscription';
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import { getRepository } from 'typeorm';
+import ISubscriptionsRepository from '@modules/subscriptions/repositories/ISubscriptionsRepository';
+import IAthletesRepository from '../repositories/IAthletesRepository';
 import IUpdateAthleteSubscriptionDTO from '../dtos/IUpdateAthleteSubscriptionDTO';
 import Athlete from '../infra/typeorm/entities/Athlete';
 
+@injectable()
 class UpdateAthleteSubscriptionService {
+  constructor(
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
+
+    @inject('SubscriptionsRepository')
+    private subscriptionsRepository: ISubscriptionsRepository,
+  ) { }
+
   public async execute({
     athlete_id,
     subscription_id,
   }: IUpdateAthleteSubscriptionDTO): Promise<Athlete> {
-    const athletesRepository = getRepository(Athlete);
-    const subscriptionsRepository = getRepository(Subscription);
-
-    const athlete = await athletesRepository.findOne(athlete_id);
+    const athlete = await this.athletesRepository.findOne({ id: athlete_id });
 
     if (!athlete) {
       throw new AppError(404, 'Aluno não encontrado');
     }
 
-    const subscription = await subscriptionsRepository.findOne(subscription_id);
+    const subscription = await this.subscriptionsRepository.findOne({
+      id: subscription_id
+    });
 
     if (!subscription) {
       throw new AppError(404, 'Plano não encontrado');
@@ -26,7 +35,7 @@ class UpdateAthleteSubscriptionService {
 
     athlete.subscription = subscription;
 
-    await athletesRepository.save(athlete);
+    await this.athletesRepository.save(athlete);
 
     return athlete;
   }

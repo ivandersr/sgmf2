@@ -4,7 +4,7 @@ import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
 import ReferralGroup from '../infra/typeorm/entities/ReferralGroup';
 
 interface IRequest {
-  referral_id: string;
+
 }
 
 class CreateReferralGroupService {

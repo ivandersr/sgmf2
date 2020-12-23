@@ -1,14 +1,18 @@
-import { getRepository } from 'typeorm';
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import { IRequest, IResponse } from '../dtos/IListAthletesWithPaginationDTO';
-import Athlete from '../infra/typeorm/entities/Athlete';
+import IAthletesRepository from '../repositories/IAthletesRepository';
 
+@injectable()
 class ListAthletesService {
-  public async execute({ page, pageSize }: IRequest): Promise<IResponse> {
-    const athletesRepository = getRepository(Athlete);
+  constructor(
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
+  ) { }
 
+  public async execute({ page, pageSize }: IRequest): Promise<IResponse> {
     if (!page || !pageSize) {
-      const [athletes, total] = await athletesRepository.findAndCount();
+      const [athletes, total] = await this.athletesRepository.findAndCount();
       return { athletes, total, pages: 1 };
     }
 
@@ -16,7 +20,7 @@ class ListAthletesService {
       throw new AppError(400, 'A página e seu tamanho devem ser numéricos');
     }
 
-    const [athletes, total] = await athletesRepository.findAndCount({
+    const [athletes, total] = await this.athletesRepository.findAndCount({
       skip: Number(page) * Number(pageSize),
       take: Number(pageSize),
       order: {

@@ -3,9 +3,9 @@ import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import ISubscriptionsRepository from '@modules/subscriptions/repositories/ISubscriptionsRepository';
 import IAthleteGroupsRepository from '@modules/athletegroups/repositories/IAthleteGroupsRepository';
+import IAthletesRepository from '../repositories/IAthletesRepository';
 import Athlete from '../infra/typeorm/entities/Athlete';
 import ICreateAthleteServiceDTO from '../dtos/ICreateAthleteServiceDTO';
-import IAthletesRepository from '../repositories/IAthletesRepository';
 
 @injectable()
 class CreateAthleteService {

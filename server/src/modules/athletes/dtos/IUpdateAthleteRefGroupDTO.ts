@@ -1,4 +1,4 @@
 export default interface IUpdateAthleteRefGroupDTO {
   id: string;
-  referralGroupId: string;
+  referral_group_id: string;
 }

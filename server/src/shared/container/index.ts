@@ -5,6 +5,12 @@ import AthletesRepository from '@modules/athletes/infra/typeorm/repositories/Ath
 import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
 import ISubscriptionsRepository from '@modules/subscriptions/repositories/ISubscriptionsRepository';
 import SubscriptionsRepository from '@modules/subscriptions/infra/typeorm/repositories/SubscriptionsRepository';
+import IPaymentsRepository from '@modules/payments/repositories/IPaymentsRepository';
+import PaymentsRepository from '@modules/payments/infra/typeorm/repositories/PaymentsRepository';
+import IReferralGroupsRepository from '@modules/referralgroups/repositories/IReferralGroupsRepository';
+import ReferralGroupsRepository from '@modules/referralgroups/infra/typeorm/repositories/ReferralGroupsRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
 container.registerSingleton<IAthleteGroupsRepository>(
   'AthleteGroupsRepository',
@@ -19,4 +25,19 @@ container.registerSingleton<IAthletesRepository>(
 container.registerSingleton<ISubscriptionsRepository>(
   'SubscriptionsRepository',
   SubscriptionsRepository,
+);
+
+container.registerSingleton<IPaymentsRepository>(
+  'PaymentsRepository',
+  PaymentsRepository,
+);
+
+container.registerSingleton<IReferralGroupsRepository>(
+  'ReferralGroupsRepository',
+  ReferralGroupsRepository,
+);
+
+container.registerSingleton<IUsersRepository>(
+  'UsersRepository',
+  UsersRepository,
 );
