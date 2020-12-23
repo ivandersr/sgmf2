@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 import UpdateAthleteSubscriptionService from '@modules/athletes/services/UpdateAthleteSubscriptionService';
 
 class AthleteSubscriptionsController {
@@ -6,7 +7,9 @@ class AthleteSubscriptionsController {
     const { id } = request.params;
     const { subscription_id } = request.body;
 
-    const updateAthleteSubscription = new UpdateAthleteSubscriptionService();
+    const updateAthleteSubscription = container.resolve(
+      UpdateAthleteSubscriptionService
+    );
 
     const athlete = await updateAthleteSubscription.execute({
       athlete_id: id,

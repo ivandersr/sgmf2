@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 import UpdateAthleteReferralGroupService from '@modules/athletes/services/UpdateAthleteReferralGroupService';
 
 class AthleteRefGroupsController {
@@ -6,11 +7,11 @@ class AthleteRefGroupsController {
     const { id } = request.params;
     const { referral_group_id } = request.body;
 
-    const updateReferral = new UpdateAthleteReferralGroupService();
+    const updateReferral = container.resolve(UpdateAthleteReferralGroupService);
 
     const updatedAthlete = await updateReferral.execute({
       id,
-      referralGroupId: referral_group_id,
+      referral_group_id,
     });
 
     return response.status(200).json(updatedAthlete);

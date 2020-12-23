@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 import CreateAthleteService from '@modules/athletes/services/CreateAthleteService';
 import FindAthleteService from '@modules/athletes/services/FindAthleteService';
 import ListAthletesService from '@modules/athletes/services/ListAthletesService';
 import UpdateAthleteService from '@modules/athletes/services/UpdateAthleteService';
-import { container } from 'tsyringe';
 
 class AthletesController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const listAthletes = new ListAthletesService();
+    const listAthletes = container.resolve(ListAthletesService);
     const { page, pageSize } = request.query;
 
     const athletes = await listAthletes.execute({
@@ -54,7 +54,7 @@ class AthletesController {
     const { id } = request.params;
     const { name, birthDate, phoneNumber } = request.body;
 
-    const updateAthlete = new UpdateAthleteService();
+    const updateAthlete = container.resolve(UpdateAthleteService);
 
     const updatedAthlete = await updateAthlete.execute({
       id,

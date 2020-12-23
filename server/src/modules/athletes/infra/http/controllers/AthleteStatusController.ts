@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 import UpdateAthleteActiveFieldService from '@modules/athletes/services/UpdateAthleteActiveFieldService';
 
 class AthleteStatusController {
@@ -6,7 +7,9 @@ class AthleteStatusController {
     const { id } = request.params;
     const { active } = request.body;
 
-    const updateAthleteActiveField = new UpdateAthleteActiveFieldService();
+    const updateAthleteActiveField = container.resolve(
+      UpdateAthleteActiveFieldService
+    );
 
     const athlete = await updateAthleteActiveField.execute({
       athlete_id: id,

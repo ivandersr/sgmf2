@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 import UpdateAthleteAthleteGroupService from '@modules/athletes/services/UpdateAthleteAthleteGroupService';
 
 class AthleteAthleteGroupsController {
@@ -6,7 +7,9 @@ class AthleteAthleteGroupsController {
     const { id } = request.params;
     const { athlete_group_id } = request.body;
 
-    const updateAthleteAthleteGroup = new UpdateAthleteAthleteGroupService();
+    const updateAthleteAthleteGroup = container.resolve(
+      UpdateAthleteAthleteGroupService
+    );
 
     const athlete = await updateAthleteAthleteGroup.execute({
       athlete_id: id,
