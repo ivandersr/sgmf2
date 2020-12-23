@@ -1,6 +1,9 @@
+import Athlete from "@modules/athletes/infra/typeorm/entities/Athlete";
+
 export default interface ICreatePaymentDTO {
   value: number;
-  paymentDate: string;
+  paymentDate: Date;
   monthsPaid: number;
-  athlete_id: string;
+  nextDueDate: Date;
+  athlete: Athlete;
 }

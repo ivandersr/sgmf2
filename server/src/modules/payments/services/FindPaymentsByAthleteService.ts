@@ -1,23 +1,28 @@
-import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository, getRepository } from 'typeorm';
+import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
 import IFindByAthleteDTO from '../dtos/IFindByAthleteDTO';
+import IPaymentsRepository from '../repositories/IPaymentsRepository';
 import Payment from '../infra/typeorm/entities/Payment';
-import PaymentsRepository from '../infra/typeorm/repositories/PaymentsRepository';
 
+@injectable()
 class FindPaymentsByAthleteService {
-  public async execute({ athlete_id }: IFindByAthleteDTO): Promise<Payment[]> {
-    const athletesRepository = getRepository(Athlete);
+  constructor(
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
 
-    const athlete = await athletesRepository.findOne(athlete_id);
+    @inject('PaymentsRepository')
+    private paymentsRepository: IPaymentsRepository,
+  ) { }
+
+  public async execute({ athlete_id }: IFindByAthleteDTO): Promise<Payment[]> {
+    const athlete = await this.athletesRepository.findOne({ id: athlete_id });
 
     if (!athlete) {
       throw new AppError(404, 'Aluno não encontrado');
     }
 
-    const paymentsRepository = getCustomRepository(PaymentsRepository);
-
-    const payments = await paymentsRepository.findByAthlete(athlete_id);
+    const payments = await this.paymentsRepository.findByAthlete(athlete_id);
 
     return payments;
   }

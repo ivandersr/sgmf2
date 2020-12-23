@@ -1,19 +1,26 @@
-import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
-import AppError from '@shared/errors/AppError';
+import { inject, injectable } from 'tsyringe';
 import { parseISO } from 'date-fns';
-import { getCustomRepository, getRepository } from 'typeorm';
+import AppError from '@shared/errors/AppError';
+import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
 import IFindByDateAndAthleteDTO from '../dtos/IFindByDateAndAthleteDTO';
+import IPaymentsRepository from '../repositories/IPaymentsRepository';
 import Payment from '../infra/typeorm/entities/Payment';
-import PaymentsRepository from '../infra/typeorm/repositories/PaymentsRepository';
 
+@injectable()
 class FindPaymentsByDateAndAthleteService {
+  constructor(
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
+
+    @inject('PaymentsRepository')
+    private paymentsRepository: IPaymentsRepository,
+  ) { }
+
   public async execute({
     paymentDate,
     athlete_id,
   }: IFindByDateAndAthleteDTO): Promise<Payment[]> {
-    const athletesRepository = getRepository(Athlete);
-
-    const athlete = await athletesRepository.findOne(athlete_id);
+    const athlete = await this.athletesRepository.findOne({ id: athlete_id });
 
     if (!athlete) {
       throw new AppError(404, 'Aluno não encontrado');
@@ -21,9 +28,7 @@ class FindPaymentsByDateAndAthleteService {
 
     const parsedDate = parseISO(paymentDate);
 
-    const paymentsRepository = getCustomRepository(PaymentsRepository);
-
-    const payments = await paymentsRepository.findByDateAndAthlete(
+    const payments = await this.paymentsRepository.findByDateAndAthlete(
       parsedDate,
       athlete_id,
     );

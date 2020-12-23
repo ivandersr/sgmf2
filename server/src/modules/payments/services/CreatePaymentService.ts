@@ -1,17 +1,27 @@
-import { getRepository } from 'typeorm';
+import { inject, injectable } from 'tsyringe';
 import { parseISO } from 'date-fns';
 import AppError from '@shared/errors/AppError';
-import Athlete from '@modules/athletes/infra/typeorm/entities/Athlete';
+import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
+import ICreatePaymentServiceDTO from '../dtos/ICreatePaymentServiceDTO';
+import IPaymentsRepository from '../repositories/IPaymentsRepository';
 import Payment from '../infra/typeorm/entities/Payment';
-import ICreatePaymentDTO from '../dtos/ICreatePaymentDTO';
 
+@injectable()
 class CreatePaymentService {
+  constructor(
+    @inject('AthletesRepository')
+    private athletesRepository: IAthletesRepository,
+
+    @inject('PaymentsRepository')
+    private paymentsRepository: IPaymentsRepository,
+  ) { }
+
   public async execute({
     value,
     paymentDate,
     monthsPaid,
     athlete_id,
-  }: ICreatePaymentDTO): Promise<Payment> {
+  }: ICreatePaymentServiceDTO): Promise<Payment> {
     if (!value) {
       throw new AppError(400, 'Valor do pagamento não deve ser vazio');
     }
@@ -28,10 +38,7 @@ class CreatePaymentService {
       throw new AppError(400, 'O aluno deve ser indicado no pagamento');
     }
 
-    const paymentsRepository = getRepository(Payment);
-    const athletesRepository = getRepository(Athlete);
-
-    const athlete = await athletesRepository.findOne(athlete_id);
+    const athlete = await this.athletesRepository.findOne({ id: athlete_id });
 
     if (!athlete) {
       throw new AppError(404, 'Aluno não encontrado');
@@ -42,15 +49,13 @@ class CreatePaymentService {
     const nextDueDate = new Date(parsedPaymentDate);
     nextDueDate.setMonth(nextDueDate.getMonth() + monthsPaid);
 
-    const payment = paymentsRepository.create({
+    const payment = this.paymentsRepository.create({
       value,
       paymentDate: parsedPaymentDate,
       monthsPaid,
       nextDueDate,
       athlete,
     });
-
-    await paymentsRepository.save(payment);
 
     return payment;
   }
