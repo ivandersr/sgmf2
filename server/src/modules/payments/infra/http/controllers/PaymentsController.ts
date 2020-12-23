@@ -1,12 +1,13 @@
 import CreatePaymentService from '@modules/payments/services/CreatePaymentService';
 import FindPaymentsByAthleteService from '@modules/payments/services/FindPaymentsByAthleteService';
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 class PaymentsController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { value, paymentDate, monthsPaid, athlete_id } = request.body;
 
-    const createPayment = new CreatePaymentService();
+    const createPayment = container.resolve(CreatePaymentService);
 
     const payment = await createPayment.execute({
       value,
@@ -21,7 +22,7 @@ class PaymentsController {
   public async find(request: Request, response: Response): Promise<Response> {
     const { athlete_id } = request.body;
 
-    const findByAthlete = new FindPaymentsByAthleteService();
+    const findByAthlete = container.resolve(FindPaymentsByAthleteService);
 
     const payments = await findByAthlete.execute({
       athlete_id,
