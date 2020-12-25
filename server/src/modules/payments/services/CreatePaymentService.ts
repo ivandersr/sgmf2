@@ -46,10 +46,10 @@ class CreatePaymentService {
 
     const parsedPaymentDate = parseISO(paymentDate);
 
-    const nextDueDate = new Date(parsedPaymentDate);
+    const nextDueDate = new Date(paymentDate);
     nextDueDate.setMonth(nextDueDate.getMonth() + monthsPaid);
 
-    const payment = this.paymentsRepository.create({
+    const payment = await this.paymentsRepository.create({
       value,
       paymentDate: parsedPaymentDate,
       monthsPaid,

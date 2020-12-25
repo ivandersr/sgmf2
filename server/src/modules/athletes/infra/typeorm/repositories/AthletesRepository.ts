@@ -4,6 +4,7 @@ import ICreateAthleteDTO from '@modules/athletes/dtos/ICreateAthleteDTO';
 import IFindManyOptionsDTO from '@modules/athletes/dtos/IFindManyOptionsDTO';
 import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
 import IFindAthleteDTO from '@modules/athletes/dtos/IFindAthleteDTO';
+import IFindByReferralGroupDTO from '@modules/athletes/dtos/IFindByReferralGroupDTO';
 import Athlete from '../entities/Athlete';
 
 class AthletesRepository implements IAthletesRepository {
@@ -42,7 +43,7 @@ class AthletesRepository implements IAthletesRepository {
   }
 
   public async findByReferralGroup(
-    referral_group_id: string,
+    { referral_group_id }: IFindByReferralGroupDTO
   ): Promise<Athlete[]> {
     const athletes = await this.ormRepository.find({
       where: { referral_group_id },
@@ -52,7 +53,7 @@ class AthletesRepository implements IAthletesRepository {
   }
 
   public async findActiveByReferralGroup(
-    referral_group_id: string,
+    { referral_group_id }: IFindByReferralGroupDTO
   ): Promise<IActiveByReferralDTO> {
     const athletes = await this.ormRepository.find({
       where: { referral_group_id, active: true },

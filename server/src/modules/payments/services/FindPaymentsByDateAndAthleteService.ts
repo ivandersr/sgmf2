@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { parseISO } from 'date-fns';
 import AppError from '@shared/errors/AppError';
 import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
-import IFindByDateAndAthleteDTO from '../dtos/IFindByDateAndAthleteDTO';
+import IFindByDateAndAthleteServiceDTO from '../dtos/IFindByDateAndAthleteServiceDTO';
 import IPaymentsRepository from '../repositories/IPaymentsRepository';
 import Payment from '../infra/typeorm/entities/Payment';
 
@@ -19,7 +19,7 @@ class FindPaymentsByDateAndAthleteService {
   public async execute({
     paymentDate,
     athlete_id,
-  }: IFindByDateAndAthleteDTO): Promise<Payment[]> {
+  }: IFindByDateAndAthleteServiceDTO): Promise<Payment[]> {
     const athlete = await this.athletesRepository.findOne({ id: athlete_id });
 
     if (!athlete) {
@@ -28,10 +28,10 @@ class FindPaymentsByDateAndAthleteService {
 
     const parsedDate = parseISO(paymentDate);
 
-    const payments = await this.paymentsRepository.findByDateAndAthlete(
-      parsedDate,
+    const payments = await this.paymentsRepository.findByDateAndAthlete({
+      paymentDate: parsedDate,
       athlete_id,
-    );
+    });
 
     return payments;
   }

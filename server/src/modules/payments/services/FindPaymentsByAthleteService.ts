@@ -22,7 +22,9 @@ class FindPaymentsByAthleteService {
       throw new AppError(404, 'Aluno não encontrado');
     }
 
-    const payments = await this.paymentsRepository.findByAthlete(athlete_id);
+    const payments = await this.paymentsRepository.findByAthlete({
+      athlete_id
+    });
 
     return payments;
   }

@@ -12,6 +12,9 @@ class FindAthleteService {
   ) { }
 
   public async execute({ id }: IFindAthleteDTO): Promise<Athlete> {
+    if (!id) {
+      throw new AppError(400, 'O id do aluno não deve ser vazio');
+    }
     const athlete = await this.athletesRepository.findOne({ id });
 
     if (!athlete) {

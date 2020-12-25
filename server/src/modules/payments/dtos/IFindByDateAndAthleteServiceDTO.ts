@@ -1,4 +1,4 @@
 export default interface IFindByDateAndAthleteDTO {
-  paymentDate: Date;
+  paymentDate: string;
   athlete_id: string;
 }

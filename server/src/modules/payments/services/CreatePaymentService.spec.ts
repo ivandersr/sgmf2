@@ -1,24 +1,57 @@
+import FakeAthleteGroupsRepository from '@modules/athletegroups/repositories/fakes/FakeAthleteGroupsRepository';
+import FakeAthletesRepository from '@modules/athletes/repositories/fakes/FakeAthletesRepository';
+import FakeSubscriptionsRepository from '@modules/subscriptions/repositories/fakes/FakeSubscriptionsRepository';
+import FakePaymentsRepository from '../repositories/fakes/FakePaymentsRepository';
 import CreatePaymentService from './CreatePaymentService';
 
-// let fakePaymentsRepository: FakePaymentsRepository;
+let fakePaymentsRepository: FakePaymentsRepository;
+let fakeAthletesRepository: FakeAthletesRepository;
+let fakeAthleteGroupsRepository: FakeAthleteGroupsRepository;
+let fakeSubscriptionsRepository: FakeSubscriptionsRepository;
 let createPayment: CreatePaymentService;
 
 describe('CreatePayment', () => {
   beforeEach(() => {
-    // fakePaymentsRepository = new FakePaymentsRepository();
-    createPayment = new CreatePaymentService();
+    fakePaymentsRepository = new FakePaymentsRepository();
+    fakeAthleteGroupsRepository = new FakeAthleteGroupsRepository();
+    fakeSubscriptionsRepository = new FakeSubscriptionsRepository();
+    fakeAthletesRepository = new FakeAthletesRepository();
+    createPayment = new CreatePaymentService(
+      fakeAthletesRepository,
+      fakePaymentsRepository
+    );
   });
 
   it('should be able to create a new payment', async () => {
+    const athleteGroup = await fakeAthleteGroupsRepository.create({
+      title: 'Grupo de alunos de testes',
+      description: 'Descrição grupo de alunos para testes',
+    });
+
+    const subscription = await fakeSubscriptionsRepository.create({
+      title: 'Plano de testes',
+      value: 100,
+    });
+
+    const athlete = await fakeAthletesRepository.create({
+      name: 'Aluno de testes',
+      birthDate: new Date(1991, 6, 25),
+      phoneNumber: '99999999',
+      athleteGroup,
+      subscription,
+    });
+
     const payment = await createPayment.execute({
-      athlete_id: '123',
+      athlete_id: athlete.id,
       monthsPaid: 3,
       paymentDate: new Date(2020, 11, 18).toDateString(),
       value: 100,
     });
 
+    const expectedNextDueDate = new Date(2021, 2, 18, 0, 0, 0);
+
     expect(payment).toHaveProperty('id');
-    expect(payment.athlete_id).toBe('123');
-    expect(payment.nextDueDate).toBe(new Date(2021, 2, 18));
+    expect(payment.athlete).toEqual(athlete);
+    expect(payment.nextDueDate).toEqual(expectedNextDueDate);
   });
 });
