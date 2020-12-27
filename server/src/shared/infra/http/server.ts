@@ -9,7 +9,7 @@ import '@shared/infra/typeorm';
 import '@shared/container';
 
 const app = express();
-const port = 3333;
+const port = process.env.APP_SERVER_PORT;
 
 app.use(cors());
 app.use(express.json());
@@ -22,7 +22,6 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
       message: err.message,
     });
   }
-  console.log(err);
 
   return response.status(500).json({
     status: 'error',
@@ -36,6 +35,4 @@ app.get('/', (request, response) =>
   }),
 );
 
-app.listen(port, () => {
-  console.log(`Listening to port ${port}.`);
-});
+app.listen(port);
