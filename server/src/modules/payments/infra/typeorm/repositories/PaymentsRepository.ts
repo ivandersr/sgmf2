@@ -1,6 +1,8 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
 import IPaymentsRepository from '@modules/payments/repositories/IPaymentsRepository';
 import ICreatePaymentDTO from '@modules/payments/dtos/ICreatePaymentDTO';
+import IFindByDateAndAthleteDTO from '@modules/payments/dtos/IFindByDateAndAthleteDTO';
+import IFindByAthleteDTO from '@modules/payments/dtos/IFindByAthleteDTO';
 import Payment from '../entities/Payment';
 
 @EntityRepository(Payment)
@@ -21,8 +23,7 @@ class PaymentsRepository
   }
 
   public async findByDateAndAthlete(
-    paymentDate: Date,
-    athlete_id: string,
+    { paymentDate, athlete_id }: IFindByDateAndAthleteDTO
   ): Promise<Payment[]> {
     const findPayment = await this.ormRepository.find({
       where: { paymentDate, athlete_id },
@@ -31,7 +32,9 @@ class PaymentsRepository
     return findPayment;
   }
 
-  public async findByAthlete(athlete_id: string): Promise<Payment[]> {
+  public async findByAthlete(
+    { athlete_id }: IFindByAthleteDTO
+  ): Promise<Payment[]> {
     const findPayment = await this.ormRepository.find({
       where: { athlete_id },
     });

@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.38% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/32</span>
+                <span class='fraction'>32/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/10</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.76% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/29</span>
+                <span class='fraction'>29/29</span>
             </div>
         
             
@@ -133,38 +133,38 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -209,26 +209,26 @@ class CreatePaymentService {
     monthsPaid,
     athlete_id,
   }: ICreatePaymentServiceDTO): Promise&lt;Payment&gt; {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!value) {
-<span class="cstat-no" title="statement not covered" >      throw new AppError(400, 'Valor do pagamento não deve ser vazio');</span>
+    if (!value) {
+      throw new AppError(400, 'Valor do pagamento não deve ser vazio');
     }
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!paymentDate) {
-<span class="cstat-no" title="statement not covered" >      throw new AppError(400, 'Data do pagamento não deve ser vazia');</span>
+    if (!paymentDate) {
+      throw new AppError(400, 'Data do pagamento não deve ser vazia');
     }
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!monthsPaid) {
-<span class="cstat-no" title="statement not covered" >      throw new AppError(400, 'Quantidade de meses pagos deve ser informada');</span>
+    if (!monthsPaid) {
+      throw new AppError(400, 'Quantidade de meses pagos deve ser informada');
     }
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!athlete_id) {
-<span class="cstat-no" title="statement not covered" >      throw new AppError(400, 'O aluno deve ser indicado no pagamento');</span>
+    if (!athlete_id) {
+      throw new AppError(400, 'O aluno deve ser indicado no pagamento');
     }
 &nbsp;
     const athlete = await this.athletesRepository.findOne({ id: athlete_id });
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!athlete) {
-<span class="cstat-no" title="statement not covered" >      throw new AppError(404, 'Aluno não encontrado');</span>
+    if (!athlete) {
+      throw new AppError(404, 'Aluno não encontrado');
     }
 &nbsp;
     const parsedPaymentDate = parseISO(paymentDate);
@@ -256,7 +256,7 @@ export default CreatePaymentService;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Dec 27 2020 10:05:40 GMT-0300 (Horário Padrão de Brasília)
+                at Sun Dec 27 2020 11:18:34 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
         <script src="../../prettify.js"></script>

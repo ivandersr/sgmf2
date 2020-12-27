@@ -38,7 +38,7 @@ class CreateReferralGroupService {
       referral: athlete,
     });
 
-    athlete.referralGroup = referralGroup;
+    Object.assign(athlete, { referralGroup });
 
     await this.athletesRepository.save(athlete);
 

@@ -21,7 +21,7 @@ class FakePaymentsRepository implements IPaymentsRepository {
     { athlete_id }: IFindByAthleteDTO
   ): Promise<Payment[]> {
     const findPayments = this.payments.filter(
-      payment => payment.athlete_id === athlete_id
+      payment => payment.athlete.id === athlete_id
     );
 
     return findPayments;
@@ -32,7 +32,7 @@ class FakePaymentsRepository implements IPaymentsRepository {
   ): Promise<Payment[]> {
     const findPayments = this.payments.filter(
       payment =>
-        payment.athlete_id === athlete_id && isEqual(
+        payment.athlete.id === athlete_id && isEqual(
           payment.paymentDate, paymentDate
         ),
     );
@@ -56,6 +56,8 @@ class FakePaymentsRepository implements IPaymentsRepository {
       nextDueDate,
       value,
     });
+
+    this.payments.push(payment);
 
     return payment;
   }
