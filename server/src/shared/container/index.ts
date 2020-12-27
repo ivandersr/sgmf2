@@ -1,4 +1,5 @@
 import { container } from 'tsyringe';
+import '@modules/users/providers';
 import AthleteGroupsRepository from '@modules/athletegroups/infra/typeorm/repositories/AthleteGroupsRepository';
 import IAthleteGroupsRepository from '@modules/athletegroups/repositories/IAthleteGroupsRepository';
 import AthletesRepository from '@modules/athletes/infra/typeorm/repositories/AthletesRepository';
