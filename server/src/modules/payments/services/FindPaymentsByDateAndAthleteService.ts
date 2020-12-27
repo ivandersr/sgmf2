@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { parseISO } from 'date-fns';
+import { parseISO, startOfDay } from 'date-fns';
 import AppError from '@shared/errors/AppError';
 import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
 import IFindByDateAndAthleteServiceDTO from '../dtos/IFindByDateAndAthleteServiceDTO';
@@ -29,7 +29,7 @@ class FindPaymentsByDateAndAthleteService {
     const parsedDate = parseISO(paymentDate);
 
     const payments = await this.paymentsRepository.findByDateAndAthlete({
-      paymentDate: parsedDate,
+      paymentDate: startOfDay(parsedDate),
       athlete_id,
     });
 

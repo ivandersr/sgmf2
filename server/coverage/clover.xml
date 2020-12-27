@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1609083194807" clover="3.2.0">
-  <project timestamp="1609083194807" name="All files">
+<coverage generated="1609084259133" clover="3.2.0">
+  <project timestamp="1609084259134" name="All files">
     <metrics statements="389" coveredstatements="389" conditionals="106" coveredconditionals="106" methods="72" coveredmethods="72" elements="567" coveredelements="567" complexity="0" loc="389" ncloc="389" packages="6" files="24" classes="24"/>
     <package name="athletegroups.services">
       <metrics statements="23" coveredstatements="23" conditionals="5" coveredconditionals="5" methods="6" coveredmethods="6"/>
@@ -318,9 +318,9 @@
         <line num="14" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
         <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
       </file>
     </package>
     <package name="referralgroups.services">

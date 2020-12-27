@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { parseISO } from 'date-fns';
+import { parseISO, startOfDay } from 'date-fns';
 import AppError from '@shared/errors/AppError';
 import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
 import ICreatePaymentServiceDTO from '../dtos/ICreatePaymentServiceDTO';
@@ -51,7 +51,7 @@ class CreatePaymentService {
 
     const payment = await this.paymentsRepository.create({
       value,
-      paymentDate: parsedPaymentDate,
+      paymentDate: startOfDay(parsedPaymentDate),
       monthsPaid,
       nextDueDate,
       athlete,
