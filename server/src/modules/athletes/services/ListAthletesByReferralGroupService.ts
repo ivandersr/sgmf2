@@ -14,7 +14,7 @@ class ListAthletesByReferralGroupService {
     referral_group_id,
   }: IListAthletesByReferralGroupDTO): Promise<Athlete[]> {
     const athletes = await this.athletesRepository.findByReferralGroup(
-      referral_group_id
+      { referral_group_id }
     );
 
     return athletes;

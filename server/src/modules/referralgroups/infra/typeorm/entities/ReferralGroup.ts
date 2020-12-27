@@ -26,7 +26,7 @@ class ReferralGroup {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => Athlete)
+  @ManyToOne(() => Athlete, { lazy: true })
   @JoinColumn({ name: 'referral_id' })
   referral: Athlete;
 }

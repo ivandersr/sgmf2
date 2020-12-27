@@ -65,6 +65,7 @@ class FakeAthletesRepository implements IAthletesRepository {
 
     Object.assign(newAthlete, {
       id: v4(),
+      active: true,
       name,
       phoneNumber,
       birthDate,
@@ -78,7 +79,9 @@ class FakeAthletesRepository implements IAthletesRepository {
   }
 
   public async save(data: Athlete): Promise<Athlete> {
-    const findIndex = this.athletes.findIndex(athlete => athlete.id === data.id)
+    const findIndex = this.athletes.findIndex(
+      athlete => athlete.id === data.id
+    );
 
     if (findIndex !== -1) {
       Object.assign(this.athletes[findIndex], data);

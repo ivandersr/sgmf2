@@ -1,5 +1,6 @@
 import FakeAthleteGroupsRepository from "@modules/athletegroups/repositories/fakes/FakeAthleteGroupsRepository";
 import FakeSubscriptionsRepository from "@modules/subscriptions/repositories/fakes/FakeSubscriptionsRepository";
+import AppError from "@shared/errors/AppError";
 import FakeAthletesRepository from "../repositories/fakes/FakeAthletesRepository";
 import FindAthleteService from "./FindAthleteService"
 
@@ -35,9 +36,23 @@ describe('FindAthleteService', () => {
       subscription,
     });
 
-    const athlete = await findAthlete.execute({ id: expectedAthlete.id })
+    const { id } = expectedAthlete;
+
+    const athlete = await findAthlete.execute({ id })
 
     expect(athlete).toBe(expectedAthlete);
   });
 
-})
+  it('should not be able to find an athlete without its id', async () => {
+    await
+      expect(findAthlete.execute({ id: '' }))
+        .rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should return 404 error when athlete is not found', async () => {
+    await
+      expect(findAthlete.execute({ id: 'id inválido' }))
+        .rejects.toBeInstanceOf(AppError);
+  });
+
+});

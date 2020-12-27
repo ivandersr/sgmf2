@@ -85,7 +85,7 @@ describe('CreateAthleteService', () => {
         birthDate: '1991-07-25',
         phoneNumber: '99999999',
         athlete_group_id: '',
-        subscription_id: '',
+        subscription_id: 'id de teste',
       })).rejects.toBeInstanceOf(AppError);
     });
 

@@ -25,7 +25,7 @@ class UpdateAthleteReferralGroupService {
       throw new AppError(404, 'Aluno não encontrado');
     }
 
-    const referralGroup = this.referralGroupsRepository.findOne({
+    const referralGroup = await this.referralGroupsRepository.findOne({
       referral_group_id
     });
 
