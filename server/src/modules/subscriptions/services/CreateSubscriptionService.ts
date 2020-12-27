@@ -19,7 +19,7 @@ class CreateSubscriptionService {
       throw new AppError(400, 'Título do plano não deve ser vazio');
     }
 
-    if (!value) {
+    if (value < 0) {
       throw new AppError(400, 'Valor do plano não deve ser vazio.');
     }
 
