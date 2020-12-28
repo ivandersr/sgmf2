@@ -1,4 +1,5 @@
 import AppError from '@shared/errors/AppError';
+import authConfig from '@config/auth';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import AuthenticateUserService from './AuthenticateUserService';
@@ -59,6 +60,26 @@ describe('AuthenticateUserService', () => {
         authenticateUser.execute({
           login: 'teste',
           password: 'senha inválida',
+        })
+      ).rejects.toBeInstanceOf(AppError);
+    });
+
+  it('should not be able to authenticate an user if app secret is not found',
+    async () => {
+      await fakeUsersRepository.create({
+        login: 'teste',
+        name: 'Usuário de testes',
+        password: '1234',
+        phoneNumber: '1',
+      });
+
+      jest.mock('@config/auth');
+      authConfig.jwt.secret = '';
+
+      await expect(
+        authenticateUser.execute({
+          login: 'teste',
+          password: '1234',
         })
       ).rejects.toBeInstanceOf(AppError);
     });

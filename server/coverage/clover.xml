@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1609168420467" clover="3.2.0">
-  <project timestamp="1609168420467" name="All files">
-    <metrics statements="416" coveredstatements="415" conditionals="126" coveredconditionals="125" methods="75" coveredmethods="75" elements="617" coveredelements="615" complexity="0" loc="416" ncloc="416" packages="6" files="25" classes="25"/>
+<coverage generated="1609181495488" clover="3.2.0">
+  <project timestamp="1609181495488" name="All files">
+    <metrics statements="416" coveredstatements="416" conditionals="126" coveredconditionals="126" methods="75" coveredmethods="75" elements="617" coveredelements="617" complexity="0" loc="416" ncloc="416" packages="6" files="25" classes="25"/>
     <package name="athletegroups.services">
       <metrics statements="23" coveredstatements="23" conditionals="5" coveredconditionals="5" methods="6" coveredmethods="6"/>
       <file name="CreateAthleteGroupService.ts" path="C:\Users\ivand\Documents\workspaces\sgmf2\server\src\modules\athletegroups\services\CreateAthleteGroupService.ts">
@@ -464,26 +464,26 @@
       </file>
     </package>
     <package name="users.services">
-      <metrics statements="39" coveredstatements="38" conditionals="10" coveredconditionals="9" methods="6" coveredmethods="6"/>
+      <metrics statements="39" coveredstatements="39" conditionals="10" coveredconditionals="10" methods="6" coveredmethods="6"/>
       <file name="AuthenticateUserService.ts" path="C:\Users\ivand\Documents\workspaces\sgmf2\server\src\modules\users\services\AuthenticateUserService.ts">
-        <metrics statements="21" coveredstatements="20" conditionals="7" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <metrics statements="21" coveredstatements="21" conditionals="7" coveredconditionals="7" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
-        <line num="13" count="3" type="stmt"/>
-        <line num="16" count="3" type="stmt"/>
-        <line num="19" count="3" type="stmt"/>
-        <line num="20" count="3" type="cond" truecount="1" falsecount="0"/>
-        <line num="22" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="20" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="23" count="1" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="30" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="30" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="31" count="1" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="37" count="0" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="36" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="1" type="stmt"/>
         <line num="39" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
         <line num="49" count="1" type="stmt"/>

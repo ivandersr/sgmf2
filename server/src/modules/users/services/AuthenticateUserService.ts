@@ -34,7 +34,7 @@ class AuthenticateUserService {
     const { secret, expiresIn } = authConfig.jwt;
 
     if (!secret) {
-      throw new AppError(500, 'O secret sumiu');
+      throw new AppError(500, 'Internal server error');
     }
     const token = sign({}, secret, {
       subject: user.id,
