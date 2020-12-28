@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import atheltesRouter from '@modules/athletes/infra/http/routes/athletes.routes';
+import athletesRouter from '@modules/athletes/infra/http/routes/athletes.routes';
 import subscriptionsRouter from '@modules/subscriptions/infra/http/routes/subscriptions.routes';
 import usersRouter from '@modules/users/infra/http/routes/users.routes';
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
@@ -9,7 +9,7 @@ import paymentsRouter from '@modules/payments/infra/http/routes/payments.routes'
 
 const routes = Router();
 
-routes.use('/athletes', atheltesRouter);
+routes.use('/athletes', athletesRouter);
 routes.use('/subscriptions', subscriptionsRouter);
 routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);

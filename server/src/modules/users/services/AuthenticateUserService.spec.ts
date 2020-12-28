@@ -15,6 +15,8 @@ describe('AuthenticateUserService', () => {
       fakeUsersRepository,
       fakeHashProvider
     );
+
+
   });
 
   it('should be able to authenticate an user', async () => {

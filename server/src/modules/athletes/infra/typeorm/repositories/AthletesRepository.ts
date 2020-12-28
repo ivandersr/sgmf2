@@ -1,10 +1,11 @@
-import { Repository, getRepository } from 'typeorm';
+import { Repository, getRepository, ILike } from 'typeorm';
 import IActiveByReferralDTO from '@modules/athletes/dtos/IActiveByReferralDTO';
 import ICreateAthleteDTO from '@modules/athletes/dtos/ICreateAthleteDTO';
 import IFindManyOptionsDTO from '@modules/athletes/dtos/IFindManyOptionsDTO';
 import IAthletesRepository from '@modules/athletes/repositories/IAthletesRepository';
 import IFindAthleteDTO from '@modules/athletes/dtos/IFindAthleteDTO';
 import IFindByReferralGroupDTO from '@modules/athletes/dtos/IFindByReferralGroupDTO';
+import IFindManyByNameOptionsDTO from '@modules/athletes/dtos/IFindManyByNameOptionsDTO';
 import Athlete from '../entities/Athlete';
 
 class AthletesRepository implements IAthletesRepository {
@@ -18,6 +19,19 @@ class AthletesRepository implements IAthletesRepository {
     options?: IFindManyOptionsDTO
   ): Promise<[Athlete[], number]> {
     const result = await this.ormRepository.findAndCount(options);
+
+    return result;
+  }
+
+  public async findByName(
+    { text, skip, take, order }: IFindManyByNameOptionsDTO
+  ): Promise<[Athlete[], number]> {
+    const result = await this.ormRepository.findAndCount({
+      where: { name: ILike(`%${text}%`) },
+      skip,
+      take,
+      order,
+    });
 
     return result;
   }

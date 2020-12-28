@@ -3,8 +3,9 @@ import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthentica
 import AthletesController from '../controllers/AthletesController';
 import AthleteRefGroupsController from '../controllers/AthleteRefGroupsController';
 import AthleteStatusController from '../controllers/AthleteStatusController';
-import AthleteSubscriptionsController from '../controllers/AthleteSubscrptionsController';
+import AthleteSubscriptionsController from '../controllers/AthleteSubscriptionsController';
 import AthleteAthleteGroupsController from '../controllers/AthleteAthleteGroupsController';
+import AthletesFilterController from '../controllers/AthetesFilterController';
 
 const athletesRouter = Router();
 const athletesController = new AthletesController();
@@ -12,9 +13,11 @@ const athleteRefGroupsController = new AthleteRefGroupsController();
 const athleteStatusController = new AthleteStatusController();
 const athleteSubscriptionsController = new AthleteSubscriptionsController();
 const athleteAthleteGroupsController = new AthleteAthleteGroupsController();
+const athletesFilterController = new AthletesFilterController();
 
 athletesRouter.use(ensureAuthenticated);
 athletesRouter.get('/', athletesController.index);
+athletesRouter.get('/filter', athletesFilterController.find)
 athletesRouter.get('/:id', athletesController.find);
 athletesRouter.post('/', athletesController.create);
 athletesRouter.put('/:id', athletesController.update);

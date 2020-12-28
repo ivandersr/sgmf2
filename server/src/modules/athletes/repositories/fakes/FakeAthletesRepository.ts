@@ -5,6 +5,7 @@ import IFindAthleteDTO from "@modules/athletes/dtos/IFindAthleteDTO";
 import IFindByReferralGroupDTO from "@modules/athletes/dtos/IFindByReferralGroupDTO";
 import IFindManyOptionsDTO from "@modules/athletes/dtos/IFindManyOptionsDTO";
 import Athlete from "@modules/athletes/infra/typeorm/entities/Athlete";
+import IFindManyByNameOptionsDTO from '@modules/athletes/dtos/IFindManyByNameOptionsDTO';
 import IAthletesRepository from "../IAthletesRepository";
 
 class FakeAthletesRepository implements IAthletesRepository {
@@ -23,6 +24,29 @@ class FakeAthletesRepository implements IAthletesRepository {
     }
 
     return [this.athletes, this.athletes.length];
+  }
+
+  public async findByName(
+    { text, skip, take, order }: IFindManyByNameOptionsDTO
+  ): Promise<[Athlete[], number]> {
+    if (skip && take) {
+      const filteredAthletes = this.athletes.filter(
+        athlete => athlete.name.toLocaleLowerCase().includes(text.toLowerCase())
+      );
+      const findAthletes = filteredAthletes.slice(skip, skip + take);
+
+      return [findAthletes, this.athletes.length]
+    }
+
+    const filteredAthletes = this.athletes.filter(
+      athlete => athlete.name.toLocaleLowerCase().includes(text.toLowerCase())
+    );
+
+    if (order) {
+      filteredAthletes.sort((a, b) => a.name <= b.name ? 1 : -1);
+    }
+
+    return [filteredAthletes, this.athletes.length];
   }
 
   public async findByReferralGroup(

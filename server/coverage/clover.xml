@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1609084259133" clover="3.2.0">
-  <project timestamp="1609084259134" name="All files">
-    <metrics statements="389" coveredstatements="389" conditionals="106" coveredconditionals="106" methods="72" coveredmethods="72" elements="567" coveredelements="567" complexity="0" loc="389" ncloc="389" packages="6" files="24" classes="24"/>
+<coverage generated="1609168420467" clover="3.2.0">
+  <project timestamp="1609168420467" name="All files">
+    <metrics statements="416" coveredstatements="415" conditionals="126" coveredconditionals="125" methods="75" coveredmethods="75" elements="617" coveredelements="615" complexity="0" loc="416" ncloc="416" packages="6" files="25" classes="25"/>
     <package name="athletegroups.services">
       <metrics statements="23" coveredstatements="23" conditionals="5" coveredconditionals="5" methods="6" coveredmethods="6"/>
       <file name="CreateAthleteGroupService.ts" path="C:\Users\ivand\Documents\workspaces\sgmf2\server\src\modules\athletegroups\services\CreateAthleteGroupService.ts">
@@ -35,7 +35,7 @@
       </file>
     </package>
     <package name="athletes.services">
-      <metrics statements="172" coveredstatements="172" conditionals="53" coveredconditionals="53" methods="30" coveredmethods="30"/>
+      <metrics statements="197" coveredstatements="197" conditionals="71" coveredconditionals="71" methods="33" coveredmethods="33"/>
       <file name="CreateAthleteService.ts" path="C:\Users\ivand\Documents\workspaces\sgmf2\server\src\modules\athletes\services\CreateAthleteService.ts">
         <metrics statements="31" coveredstatements="31" conditionals="12" coveredconditionals="12" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
@@ -85,6 +85,34 @@
         <line num="24" count="1" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
         <line num="28" count="1" type="stmt"/>
+      </file>
+      <file name="FindAthletesByNameService.ts" path="C:\Users\ivand\Documents\workspaces\sgmf2\server\src\modules\athletes\services\FindAthletesByNameService.ts">
+        <metrics statements="25" coveredstatements="25" conditionals="18" coveredconditionals="18" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="7" type="stmt"/>
+        <line num="16" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="5" type="cond" truecount="4" falsecount="0"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="22" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="40" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="46" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="47" count="2" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
       </file>
       <file name="ListActiveAthletesByReferralGroupService.ts" path="C:\Users\ivand\Documents\workspaces\sgmf2\server\src\modules\athletes\services\ListActiveAthletesByReferralGroupService.ts">
         <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
@@ -436,9 +464,9 @@
       </file>
     </package>
     <package name="users.services">
-      <metrics statements="37" coveredstatements="37" conditionals="8" coveredconditionals="8" methods="6" coveredmethods="6"/>
+      <metrics statements="39" coveredstatements="38" conditionals="10" coveredconditionals="9" methods="6" coveredmethods="6"/>
       <file name="AuthenticateUserService.ts" path="C:\Users\ivand\Documents\workspaces\sgmf2\server\src\modules\users\services\AuthenticateUserService.ts">
-        <metrics statements="19" coveredstatements="19" conditionals="5" coveredconditionals="5" methods="3" coveredmethods="3"/>
+        <metrics statements="21" coveredstatements="20" conditionals="7" coveredconditionals="6" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -454,10 +482,12 @@
         <line num="30" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="31" count="1" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
-        <line num="45" count="1" type="stmt"/>
-        <line num="47" count="1" type="stmt"/>
+        <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
       </file>
       <file name="CreateUserService.ts" path="C:\Users\ivand\Documents\workspaces\sgmf2\server\src\modules\users\services\CreateUserService.ts">
         <metrics statements="18" coveredstatements="18" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>

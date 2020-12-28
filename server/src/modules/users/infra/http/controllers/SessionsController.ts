@@ -13,6 +13,8 @@ class SessionsController {
       password,
     });
 
+    Reflect.deleteProperty(user, 'password');
+
     return response.json({ user, token });
   }
 }
