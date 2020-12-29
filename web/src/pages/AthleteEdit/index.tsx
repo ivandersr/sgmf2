@@ -41,8 +41,18 @@ const AthleteEdit: React.FC = () => {
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
           phoneNumber: Yup.string().required('Telefone obrigatório'),
-          birthDate: Yup.date().required('Data de nascimeto obrigatória'),
-          // TODO formatação de datas no padrão BR
+          birthDate: Yup.string()
+            .required('Data de nascimeto obrigatória')
+            .test(
+              'valid-date',
+              'Data deve ser no formato DD/MM/AAAA',
+              value => {
+                if (value) {
+                  return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
+                }
+                return false;
+              },
+            ),
         });
 
         await schema.validate(data, {
