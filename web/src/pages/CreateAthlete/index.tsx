@@ -26,10 +26,12 @@ interface AthleteGroup {
   description: string;
 }
 
-interface AthleteEditData {
+interface AthleteCreateData {
   name: string;
   birthDate: Date;
   phoneNumber: string;
+  subscriptionId: string;
+  athleteGroupId: string;
 }
 
 const AthleteEdit: React.FC = () => {
@@ -54,17 +56,16 @@ const AthleteEdit: React.FC = () => {
   ), [athleteGroups]);
 
   useEffect(() => {
-    api.get('/subscriptions').then((response) => {
-      setSubscriptions(response.data);
+    api.get('/subscriptions?page=0&pageSize=100').then((response) => {
+      setSubscriptions(response.data.subscriptions);
     });
-
     api.get('/athletegroups').then((response) => {
       setAthleteGroups(response.data);
     });
   }, []);
 
   const handleSubmit = useCallback(
-    async (data: AthleteEditData) => {
+    async (data: AthleteCreateData) => {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
@@ -82,21 +83,31 @@ const AthleteEdit: React.FC = () => {
                 return false;
               },
             ),
+          subscriptionId: Yup.string().required('Plano obrigratório'),
+          athleteGroupId: Yup.string().required('Grupo obrigatório'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        const { name, birthDate, phoneNumber } = data;
+        const {
+          name,
+          birthDate,
+          phoneNumber,
+          subscriptionId,
+          athleteGroupId
+        } = data;
 
         const formData = {
           name,
           birthDate,
           phoneNumber,
+          subscription_id: subscriptionId,
+          athlete_group_id: athleteGroupId,
         };
 
-        await api.post(`/athletes`, formData);
+        await api.post('/athletes', formData);
 
         history.push('/alunos');
       } catch (error) {
@@ -134,12 +145,15 @@ const AthleteEdit: React.FC = () => {
             placeholder="Data de Nascimento"
           />
           <Select
+            name="subscriptionId"
             options={subscriptionOptions}
-            defaultValue='Selecione o plano'
+            defaultOption='Selecione o plano'
+
           />
           <Select
+            name="athleteGroupId"
             options={athleteGroupOptions}
-            defaultValue='Selecione o grupo de alunos'
+            defaultOption='Selecione o grupo de alunos'
           />
           <Button type="submit">Cadastrar</Button>
         </Form>

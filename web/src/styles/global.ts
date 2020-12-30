@@ -16,6 +16,7 @@ const athleteMenuColor = '#e1e3e6';
 const inputBackgroundColor = '#232129';
 const inputPlaceholderColor = '#666360';
 const inputTextColor = '#f4ede8';
+const errorColor = '#c53030';
 
 export default createGlobalStyle`
   * {
@@ -44,6 +45,7 @@ export default createGlobalStyle`
     --input-background-color: ${inputBackgroundColor};
     --input-placeholder-color: ${inputPlaceholderColor};
     --input-text-color: ${inputTextColor};
+    --error-color: ${errorColor};
   }
 
   body {

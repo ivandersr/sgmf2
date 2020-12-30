@@ -36,6 +36,7 @@
     "react/require-default-props": "off",
     "react/prop-types": "off",
     "react/jsx-indent": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "react/jsx-filename-extension": [
       1,
       {
