@@ -9,6 +9,7 @@ import AthleteEdit from '../pages/AthleteEdit';
 import AthletePayment from '../pages/AthletePayment';
 import AthleteReferralGroup from '../pages/AthleteReferralGroup';
 import AthletePhysicalExam from '../pages/AthletePhysicalExam';
+import CreateAthlete from '../pages/CreateAthlete';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -16,6 +17,7 @@ const Routes: React.FC = () => (
     <Route path="/cadastrar" component={SignUp} />
     <Route path="/alunos" component={Athletes} isPrivate exact />
     <Route path="/aluno-detalhes" component={AthleteEdit} isPrivate />
+    <Route path="/novoaluno" component={CreateAthlete} isPrivate />
     <Route
       path="/alunos/:id/mensalidades"
       component={AthletePayment}
