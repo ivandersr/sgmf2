@@ -5,6 +5,7 @@ import api from '../services/apiClient';
 interface User {
   id: string;
   login: string;
+  name: string;
 }
 
 interface AuthState {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Link } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
@@ -11,9 +11,11 @@ import PageHeader from '../../components/PageHeader';
 import { useToast } from '../../hooks/toast';
 import api from '../../services/apiClient';
 
-import { Container } from './styles';
+import { Container, Content, Details, Menu } from './styles';
+import { formatDate } from '../../utils/formatDate';
 
 interface Athlete {
+  id: string;
   name: string;
   birthDate: Date;
   phoneNumber: string;
@@ -95,28 +97,46 @@ const AthleteEdit: React.FC = () => {
 
   return (
     <Container>
-      <PageHeader
-        title={`Detalhes do aluno - ${athlete ? athlete.name : '??'}`}
-      />
+      <PageHeader title="Detalhes do aluno" />
+
       {athlete && (
-        <Form
-          ref={formRef}
-          initialData={{
-            name: athlete.name,
-            birthDate: athlete.birthDate,
-            phoneNumber: athlete.phoneNumber,
-          }}
-          onSubmit={handleSubmit}
-        >
-          <Input name="name" icon={FiUser} placeholder="Nome" />
-          <Input name="phoneNumber" icon={FiPhone} placeholder="Telefone" />
-          <Input
-            name="birthDate"
-            icon={FiStar}
-            placeholder="Data de Nascimento"
-          />
-          <Button type="submit">Atualizar</Button>
-        </Form>
+        <Content>
+          <Details>
+            <h3>{athlete.name}</h3>
+            <Form
+              ref={formRef}
+              initialData={{
+                name: athlete.name,
+                birthDate: formatDate(athlete.birthDate),
+                phoneNumber: athlete.phoneNumber,
+              }}
+              onSubmit={handleSubmit}
+            >
+              <Input name="name" icon={FiUser} placeholder="Nome" />
+              <Input name="phoneNumber" icon={FiPhone} placeholder="Telefone" />
+              <Input
+                name="birthDate"
+                icon={FiStar}
+                placeholder="Data de Nascimento"
+              />
+              <Button type="submit">Atualizar</Button>
+            </Form>
+          </Details>
+          <Menu>
+            <Link to={`/alunos/${athlete.id}/mensalidades`}>
+              Receber mensalidade
+            </Link>
+            <Link to={`/alunos/${athlete.id}/mensalidades`}>
+              Receber mensalidade
+            </Link>
+            <Link to={`/alunos/${athlete.id}/mensalidades`}>
+              Receber mensalidade
+            </Link>
+            <Link to={`/alunos/${athlete.id}/mensalidades`}>
+              Receber mensalidade
+            </Link>
+          </Menu>
+        </Content>
       )}
     </Container>
   );

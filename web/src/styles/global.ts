@@ -3,11 +3,16 @@ import { shade } from 'polished';
 
 const primaryColor = '#3e9c74';
 const secondaryColor = '#c6c6c6';
+const tertiaryColor = '#232129';
 const backgroundColor = '#423f48';
 const primaryTextColor = '#312e38';
 const primaryTextColorActive = '#ddd';
 const secondaryTextColor = '#212128';
 const headerTextColor = '#eee';
+const buttonLogoutColor = '#922323';
+const menuTextColor = '#332f31';
+const menuColor = '#2f9970';
+const athleteMenuColor = '#e1e3e6';
 
 export default createGlobalStyle`
   * {
@@ -25,6 +30,14 @@ export default createGlobalStyle`
     --secondary-text-color: ${secondaryTextColor};
     --secondary-color-hover: ${shade(0.1, secondaryColor)};
     --header-text-color: ${headerTextColor};
+    --button-logout-color: ${buttonLogoutColor};
+    --button-logout-color-hover: ${shade(0.1, buttonLogoutColor)};
+    --menu-text-color: ${menuTextColor};
+    --menu-color: ${menuColor};
+    --menu-color-hover: ${shade(0.1, menuColor)};
+    --athlete-menu-color: ${athleteMenuColor};
+    --athlete-menu-color-hover:${shade(0.1, athleteMenuColor)};
+    --tertiary-color: ${tertiaryColor};
   }
 
   body {

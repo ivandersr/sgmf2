@@ -3,11 +3,8 @@ import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 import PageHeader from '../../components/PageHeader';
 import Pagination from '../../components/Pagination';
-
-import { useAuth } from '../../hooks/auth';
 import api from '../../services/apiClient';
 import { formatDate } from '../../utils/formatDate';
-
 import { AthletesTable, AthleteRow, Container } from './styles';
 
 interface Athlete {
@@ -25,8 +22,6 @@ const Athletes: React.FC = () => {
   const [activePage, setActivePage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
-
-  const { signOut } = useAuth();
 
   const toggleModal = useCallback(() => {
     setModalOpen(!modalOpen);
@@ -49,7 +44,9 @@ const Athletes: React.FC = () => {
 
   return (
     <Container>
-      <PageHeader title="Alunos" />
+      <PageHeader
+        title="Alunos"
+      />
       <AthletesTable>
         <thead>
           <tr>
@@ -67,7 +64,7 @@ const Athletes: React.FC = () => {
               <td>{athlete.phoneNumber}</td>
               <td>
                 <Button onClick={() => handleSelectedAthlete(athlete)}>
-                  Editar
+                  Detalhes
                 </Button>
                 <Modal
                   isOpen={modalOpen}
@@ -84,7 +81,6 @@ const Athletes: React.FC = () => {
         totalPages={totalPages}
         activePage={activePage}
       />
-      <Button onClick={() => signOut()}>Sair</Button>
     </Container>
   );
 };
