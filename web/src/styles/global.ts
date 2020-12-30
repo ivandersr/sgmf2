@@ -13,6 +13,9 @@ const buttonLogoutColor = '#922323';
 const menuTextColor = '#332f31';
 const menuColor = '#2f9970';
 const athleteMenuColor = '#e1e3e6';
+const inputBackgroundColor = '#232129';
+const inputPlaceholderColor = '#666360';
+const inputTextColor = '#f4ede8';
 
 export default createGlobalStyle`
   * {
@@ -38,6 +41,9 @@ export default createGlobalStyle`
     --athlete-menu-color: ${athleteMenuColor};
     --athlete-menu-color-hover:${shade(0.1, athleteMenuColor)};
     --tertiary-color: ${tertiaryColor};
+    --input-background-color: ${inputBackgroundColor};
+    --input-placeholder-color: ${inputPlaceholderColor};
+    --input-text-color: ${inputTextColor};
   }
 
   body {

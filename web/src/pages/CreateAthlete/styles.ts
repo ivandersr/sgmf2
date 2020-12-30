@@ -24,7 +24,7 @@ export const Content = styled.div`
     flex-direction: column;
     align-items: center;
     input {
-      width: 400px;
+      width: 300px;
     }
 
     button {
@@ -32,3 +32,4 @@ export const Content = styled.div`
     }
   }
 `;
+

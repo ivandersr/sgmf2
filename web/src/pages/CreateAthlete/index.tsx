@@ -4,13 +4,13 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import { FiPhone, FiStar, FiUser } from 'react-icons/fi';
-import Select from 'react-select';
 import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import PageHeader from '../../components/PageHeader';
 import { useToast } from '../../hooks/toast';
 import api from '../../services/apiClient';
+import Select from '../../components/Select';
 
 import { Container, Content } from './styles';
 
@@ -133,8 +133,14 @@ const AthleteEdit: React.FC = () => {
             icon={FiStar}
             placeholder="Data de Nascimento"
           />
-          <Select options={subscriptionOptions} />
-          <Select options={athleteGroupOptions} />
+          <Select
+            options={subscriptionOptions}
+            defaultValue='Selecione o plano'
+          />
+          <Select
+            options={athleteGroupOptions}
+            defaultValue='Selecione o grupo de alunos'
+          />
           <Button type="submit">Cadastrar</Button>
         </Form>
 
