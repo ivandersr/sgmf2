@@ -147,13 +147,13 @@ const AthleteEdit: React.FC = () => {
           <Select
             name="subscriptionId"
             options={subscriptionOptions}
-            defaultOption='Selecione o plano'
+            defaultValue='Selecione o plano'
 
           />
           <Select
             name="athleteGroupId"
             options={athleteGroupOptions}
-            defaultOption='Selecione o grupo de alunos'
+            defaultValue='Selecione o grupo de alunos'
           />
           <Button type="submit">Cadastrar</Button>
         </Form>

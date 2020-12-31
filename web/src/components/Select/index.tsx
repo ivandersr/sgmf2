@@ -12,12 +12,12 @@ interface SelectProps {
     value: string;
     label: string;
   }[];
-  defaultOption: string;
+  defaultValue: string;
 }
 
-const Select: React.FC<SelectProps> = ({ name, options, defaultOption }) => {
+const Select: React.FC<SelectProps> = ({ name, options, defaultValue }) => {
   const selectRef = useRef(null);
-  const { fieldName, defaultValue, error, registerField } = useField(name);
+  const { fieldName, error, registerField } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -76,8 +76,7 @@ const Select: React.FC<SelectProps> = ({ name, options, defaultOption }) => {
           }
         }
         options={options}
-        defaultOption={{ value: '', label: defaultOption }}
-        defaultValue={defaultValue}
+        defaultValue={{ value: '', label: defaultValue }}
         name={name}
       />
       {error && (
