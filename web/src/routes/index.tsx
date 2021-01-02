@@ -12,6 +12,7 @@ import AthletePhysicalExam from '../pages/AthletePhysicalExam';
 import CreateAthlete from '../pages/CreateAthlete';
 import Subscriptions from '../pages/Subscriptions';
 import SubscriptionEdit from '../pages/SubscriptionEdit';
+import CreateSubscription from '../pages/CreateSubscription';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -21,6 +22,7 @@ const Routes: React.FC = () => (
     <Route path="/aluno-detalhes" component={AthleteEdit} isPrivate />
     <Route path="/novoaluno" component={CreateAthlete} isPrivate />
     <Route path="/planos" component={Subscriptions} isPrivate />
+    <Route path="/novoplano" component={CreateSubscription} isPrivate />
     <Route path="/plano-detalhes" component={SubscriptionEdit} isPrivate />
     <Route
       path="/alunos/:id/mensalidades"

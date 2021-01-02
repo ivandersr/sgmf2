@@ -36,6 +36,8 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         <Link to="/novoaluno">Cadastrar aluno</Link>
         <Link to="/planos">Listar Planos</Link>
         <Link to="/novoplano">Cadastrar Plano</Link>
+        <Link to="/categorias">Listar Categorias</Link>
+        <Link to="/novacategoria">Nova Categoria</Link>
       </NavMenu>
     </Container>
   );
