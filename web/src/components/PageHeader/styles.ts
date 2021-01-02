@@ -50,7 +50,7 @@ export const UserMenu = styled.div`
   }
 
   button {
-    width: 140px;
+    width: 120px;
     height: 30%;
     background-color: var(--button-logout-color);
     color: var(--header-text-color);

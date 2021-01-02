@@ -12,7 +12,7 @@ export const Container = styled.div`
   }
 `;
 
-export const SubscriptionsTable = styled.table`
+export const AthleteGroupsTable = styled.table`
   border: 1px solid var(--background-color);
 
   color: var(--primary-text-color);
@@ -48,7 +48,7 @@ export const SubscriptionsTable = styled.table`
   }
 `;
 
-export const SubscriptionRow = styled.tr`
+export const AthleteGroupRow = styled.tr`
   width: 100%;
   display: flex;
   flex-direction: row;

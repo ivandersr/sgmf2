@@ -13,6 +13,8 @@ import CreateAthlete from '../pages/CreateAthlete';
 import Subscriptions from '../pages/Subscriptions';
 import SubscriptionEdit from '../pages/SubscriptionEdit';
 import CreateSubscription from '../pages/CreateSubscription';
+import AthleteGroups from '../pages/AthleteGroups';
+import AthleteGroupsEdit from '../pages/AthleteGroupsEdit';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -24,6 +26,8 @@ const Routes: React.FC = () => (
     <Route path="/planos" component={Subscriptions} isPrivate />
     <Route path="/novoplano" component={CreateSubscription} isPrivate />
     <Route path="/plano-detalhes" component={SubscriptionEdit} isPrivate />
+    <Route path="/categorias" component={AthleteGroups} isPrivate />
+    <Route path="/categoria-detalhes" component={AthleteGroupsEdit} isPrivate />
     <Route
       path="/alunos/:id/mensalidades"
       component={AthletePayment}
