@@ -7,10 +7,6 @@ export const Container = styled.div`
   flex-direction: column;
   min-width: 1024px;
 
-  button {
-    width: 80%;
-  }
-
   table {
     width: 80%;
   }

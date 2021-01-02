@@ -10,7 +10,7 @@ interface AthleteGroup {
   description: number;
 }
 
-const Subscriptions: React.FC = () => {
+const AthleteGroups: React.FC = () => {
   const [athleteGroups, setAthleteGroups] = useState<AthleteGroup[]>([]);
 
   useEffect(() => {
@@ -54,4 +54,4 @@ const Subscriptions: React.FC = () => {
   );
 };
 
-export default Subscriptions;
+export default AthleteGroups;

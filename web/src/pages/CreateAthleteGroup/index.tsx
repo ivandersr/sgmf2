@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { FiDollarSign, FiFileText } from 'react-icons/fi';
+import { FiEdit3, FiFileText } from 'react-icons/fi';
 import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -13,42 +13,32 @@ import api from '../../services/apiClient';
 
 import { Container, Content } from './styles';
 
-interface SubscriptionCreateData {
+interface AthleteGroupCreateData {
   title: string;
-  value: number;
+  description: string;
 }
 
-const CreateSubscription: React.FC = () => {
+const CreateAthleteGroup: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
-    async (data: SubscriptionCreateData) => {
+    async (data: AthleteGroupCreateData) => {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
           title: Yup.string().required('Título obrigatório'),
-          value: Yup.string().required('Valor obrigatório'),
+          description: Yup.string().required('Descrição obrigatória'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        const {
-          title,
-          value
-        } = data;
+        await api.post('/athletegroups', data);
 
-        const formData = {
-          title,
-          value: Number(value),
-        };
-
-        await api.post('/subscriptions', formData);
-
-        history.push('/planos');
+        history.push('/categorias');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationErrors(error);
@@ -68,16 +58,20 @@ const CreateSubscription: React.FC = () => {
 
   return (
     <Container>
-      <PageHeader title="Cadastrar novo plano" />
+      <PageHeader title="Cadastrar nova categoria" />
       <Content>
 
-        <h3>Dados do plano</h3>
+        <h3>Dados da categoria</h3>
         <Form
           ref={formRef}
           onSubmit={handleSubmit}
         >
-          <Input name="title" icon={FiFileText} placeholder="Título do plano" />
-          <Input name="value" icon={FiDollarSign} placeholder="Valor (R$)" />
+          <Input
+            name="title"
+            icon={FiFileText}
+            placeholder="Título da Categoria"
+          />
+          <Input name="description" icon={FiEdit3} placeholder="Descrição" />
           <Button type="submit">Cadastrar</Button>
         </Form>
       </Content>
@@ -85,4 +79,4 @@ const CreateSubscription: React.FC = () => {
   );
 };
 
-export default CreateSubscription;
+export default CreateAthleteGroup;

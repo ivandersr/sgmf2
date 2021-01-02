@@ -24,7 +24,7 @@ interface AthleteGroupEditData {
   description: number;
 }
 
-const SubscriptionEdit: React.FC = () => {
+const AthleteGroupEdit: React.FC = () => {
   const { search } = useLocation();
   const athleteGroupId = search.substring(1);
   const [athleteGroup, setAthleteGroup] = useState<AthleteGroup>();
@@ -102,4 +102,4 @@ const SubscriptionEdit: React.FC = () => {
   );
 };
 
-export default SubscriptionEdit;
+export default AthleteGroupEdit;

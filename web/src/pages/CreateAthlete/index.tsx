@@ -34,7 +34,7 @@ interface AthleteCreateData {
   athleteGroupId: string;
 }
 
-const AthleteEdit: React.FC = () => {
+const CreateAthlete: React.FC = () => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [athleteGroups, setAthleteGroups] = useState<AthleteGroup[]>([]);
   const formRef = useRef<FormHandles>(null);
@@ -164,4 +164,4 @@ const AthleteEdit: React.FC = () => {
   );
 };
 
-export default AthleteEdit;
+export default CreateAthlete;
