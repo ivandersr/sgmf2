@@ -10,21 +10,9 @@ export const Container = styled.div`
   table {
     width: 80%;
   }
-
-  form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-
-    button {
-      margin: 10px;
-    }
-  }
 `;
 
-export const AthletesTable = styled.table`
+export const PaymentsTable = styled.table`
   border: 1px solid var(--background-color);
 
   color: var(--primary-text-color);
@@ -60,7 +48,7 @@ export const AthletesTable = styled.table`
   }
 `;
 
-export const AthleteRow = styled.tr`
+export const PaymentRow = styled.tr`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -75,7 +63,7 @@ export const AthleteRow = styled.tr`
 
   td {
     display: flex;
-    width: 25%;
+    width: 34%;
     justify-content: center;
     align-items: flex-start;
 

@@ -123,11 +123,11 @@ const AthleteEdit: React.FC = () => {
             </Form>
           </Details>
           <Menu>
-            <Link to={`/alunos/${athlete.id}/mensalidades`}>
+            <Link to={`/alunos/${athlete.id}/pagar-mensalidade`}>
               Receber mensalidade
             </Link>
-            <Link to={`/alunos/${athlete.id}/mensalidades`}>
-              Receber mensalidade
+            <Link to={`/alunos/${athlete.id}/mensalidades-pagas`}>
+              Pagamentos anteriores
             </Link>
             <Link to={`/alunos/${athlete.id}/mensalidades`}>
               Receber mensalidade

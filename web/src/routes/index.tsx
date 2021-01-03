@@ -6,7 +6,6 @@ import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Athletes from '../pages/Athletes';
 import AthleteEdit from '../pages/AthleteEdit';
-import AthletePayment from '../pages/AthletePayment';
 import AthleteReferralGroup from '../pages/AthleteReferralGroup';
 import AthletePhysicalExam from '../pages/AthletePhysicalExam';
 import CreateAthlete from '../pages/CreateAthlete';
@@ -16,6 +15,8 @@ import CreateSubscription from '../pages/CreateSubscription';
 import AthleteGroups from '../pages/AthleteGroups';
 import AthleteGroupEdit from '../pages/AthleteGroupEdit';
 import CreateAthleteGroup from '../pages/CreateAthleteGroup';
+import CreateAthletePayment from '../pages/CreateAthletePayment';
+import AthletePayments from '../pages/AthletePayments';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -31,14 +32,22 @@ const Routes: React.FC = () => (
     <Route path="/novacategoria" component={CreateAthleteGroup} isPrivate />
     <Route path="/categoria-detalhes" component={AthleteGroupEdit} isPrivate />
     <Route
-      path="/alunos/:id/mensalidades"
-      component={AthletePayment}
+      path="/alunos/:id/pagar-mensalidade"
+      component={CreateAthletePayment}
       isPrivate
+      exact
+    />
+    <Route
+      path="/alunos/:id/mensalidades-pagas"
+      component={AthletePayments}
+      isPrivate
+      exact
     />
     <Route
       path="/aluno/:id/avaliacao"
       component={AthletePhysicalExam}
       isPrivate
+      exact
     />
     <Route
       path="/aluno-indicacoes"

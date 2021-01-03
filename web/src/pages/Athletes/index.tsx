@@ -1,11 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import Modal from '../../components/Modal';
-import Button from '../../components/Button';
+import { FormHandles } from '@unform/core';
+import { Form } from '@unform/web';
+import * as Yup from 'yup';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Input from '../../components/Input';
 import PageHeader from '../../components/PageHeader';
 import Pagination from '../../components/Pagination';
 import api from '../../services/apiClient';
 import { formatDate } from '../../utils/formatDate';
 import { AthletesTable, AthleteRow, Container } from './styles';
+import getValidationErrors from '../../utils/getValidationErrors';
+import Button from '../../components/Button';
+import { useToast } from '../../hooks/toast';
 
 interface Athlete {
   id: string;
@@ -14,39 +20,66 @@ interface Athlete {
   phoneNumber: string;
 }
 
+interface SearchData {
+  text: string;
+}
+
 const Athletes: React.FC = () => {
   const [athletes, setAthletes] = useState<Athlete[]>([]);
-  const [selectedAthlete, setSelectedAthlete] = useState<Athlete>(
-    {} as Athlete,
-  );
   const [activePage, setActivePage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [searchText, setSearchText] = useState<string>('');
 
-  const toggleModal = useCallback(() => {
-    setModalOpen(!modalOpen);
-  }, [modalOpen]);
+  const { addToast } = useToast();
 
-  const handleSelectedAthlete = useCallback(
-    (athlete: Athlete) => {
-      setSelectedAthlete(athlete);
-      toggleModal();
-    },
-    [toggleModal],
-  );
+  const formRef = useRef<FormHandles>(null);
+
+  const handleSearch = useCallback(async (data: SearchData) => {
+    try {
+      formRef.current?.setErrors({});
+      const schema = Yup.object().shape({
+        text: Yup.string()
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      const { text } = data;
+
+      setSearchText(text);
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(error);
+        formRef.current?.setErrors(errors);
+        return;
+      }
+      addToast({
+        type: 'error',
+        title: 'Erro na operação',
+        description:
+          'Houve um erro na procura pelo aluno. Tente novamente',
+      });
+    }
+  }, [addToast]);
 
   useEffect(() => {
-    api.get(`/athletes?page=${activePage}&pageSize=4`).then(response => {
+    api.get(`/athletes/filter?text=${searchText}&page=${activePage}&pageSize=4`).then(response => {
       setAthletes(response.data.athletes);
       setTotalPages(response.data.pages);
     });
-  }, [activePage]);
+  }, [activePage, searchText]);
 
   return (
     <Container>
       <PageHeader
         title="Alunos"
       />
+      <Form ref={formRef} onSubmit={handleSearch}>
+        <Input name="text" placeholder="Procurar por nome" />
+        <Button type="submit">Procurar</Button>
+        <Button type="button" onClick={() => setSearchText('')}>Limpar Busca</Button>
+      </Form>
       <AthletesTable>
         <thead>
           <tr>
@@ -63,14 +96,9 @@ const Athletes: React.FC = () => {
               <td>{formatDate(athlete.birthDate)}</td>
               <td>{athlete.phoneNumber}</td>
               <td>
-                <Button onClick={() => handleSelectedAthlete(athlete)}>
+                <Link to={{ pathname: 'aluno-detalhes', search: athlete.id }}>
                   Detalhes
-                </Button>
-                <Modal
-                  isOpen={modalOpen}
-                  setIsOpen={() => toggleModal()}
-                  selectedAthlete={selectedAthlete}
-                />
+                </Link>
               </td>
             </AthleteRow>
           ))}
