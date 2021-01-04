@@ -12,7 +12,10 @@ interface SelectProps {
     value: string;
     label: string;
   }[];
-  defaultValue: string;
+  defaultValue: {
+    value: string;
+    label: string;
+  };
 }
 
 const Select: React.FC<SelectProps> = ({ name, options, defaultValue }) => {
@@ -76,7 +79,7 @@ const Select: React.FC<SelectProps> = ({ name, options, defaultValue }) => {
           }
         }
         options={options}
-        defaultValue={{ value: '', label: defaultValue }}
+        defaultValue={defaultValue}
         name={name}
       />
       {error && (

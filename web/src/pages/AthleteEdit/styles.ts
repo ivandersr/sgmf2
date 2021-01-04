@@ -31,8 +31,9 @@ export const Details = styled.div`
     flex-direction: column;
     align-items: center;
     input {
-      width: 400px;
+      width: 320px;
     }
+
 
     button {
       width: 200px;

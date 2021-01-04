@@ -8,6 +8,7 @@ const backgroundColor = '#423f48';
 const primaryTextColor = '#312e38';
 const primaryTextColorActive = '#ddd';
 const secondaryTextColor = '#212128';
+const secondaryTextColorInactive = '#454555';
 const headerTextColor = '#eee';
 const buttonLogoutColor = '#922323';
 const menuTextColor = '#332f31';
@@ -32,6 +33,7 @@ export default createGlobalStyle`
     --primary-text-color-active: ${primaryTextColorActive};
     --secondary-color: ${secondaryColor};
     --secondary-text-color: ${secondaryTextColor};
+    --secondary-text-color-inactive: ${secondaryTextColorInactive};
     --secondary-color-hover: ${shade(0.1, secondaryColor)};
     --header-text-color: ${headerTextColor};
     --button-logout-color: ${buttonLogoutColor};

@@ -147,13 +147,13 @@ const CreateAthlete: React.FC = () => {
           <Select
             name="subscriptionId"
             options={subscriptionOptions}
-            defaultValue='Selecione o plano'
+            defaultValue={{ value: '', label: 'Selecione o plano' }}
 
           />
           <Select
             name="athleteGroupId"
             options={athleteGroupOptions}
-            defaultValue='Selecione a categoria'
+            defaultValue={{ value: '', label: 'Selecione a categoria' }}
           />
           <Button type="submit">Cadastrar</Button>
         </Form>

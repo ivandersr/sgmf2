@@ -8,7 +8,7 @@ import PageHeader from '../../components/PageHeader';
 import Pagination from '../../components/Pagination';
 import api from '../../services/apiClient';
 import { formatDate } from '../../utils/formatDate';
-import { AthletesTable, AthleteRow, Container } from './styles';
+import { AthletesTable, AthleteRow, Container, ActiveCounter } from './styles';
 import getValidationErrors from '../../utils/getValidationErrors';
 import Button from '../../components/Button';
 import { useToast } from '../../hooks/toast';
@@ -18,6 +18,7 @@ interface Athlete {
   name: string;
   birthDate: Date;
   phoneNumber: string;
+  active: boolean;
 }
 
 interface SearchData {
@@ -29,6 +30,7 @@ const Athletes: React.FC = () => {
   const [activePage, setActivePage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [searchText, setSearchText] = useState<string>('');
+  const [activeCount, setActiveCount] = useState<number>(0);
 
   const { addToast } = useToast();
 
@@ -68,6 +70,9 @@ const Athletes: React.FC = () => {
       setAthletes(response.data.athletes);
       setTotalPages(response.data.pages);
     });
+    api.get('/athletes/count').then(response => {
+      setActiveCount(response.data.count);
+    })
   }, [activePage, searchText]);
 
   return (
@@ -91,7 +96,7 @@ const Athletes: React.FC = () => {
         </thead>
         <tbody>
           {athletes.map(athlete => (
-            <AthleteRow key={athlete.id}>
+            <AthleteRow active={athlete.active} key={athlete.id}>
               <td>{athlete.name}</td>
               <td>{formatDate(athlete.birthDate)}</td>
               <td>{athlete.phoneNumber}</td>
@@ -104,6 +109,13 @@ const Athletes: React.FC = () => {
           ))}
         </tbody>
       </AthletesTable>
+      <ActiveCounter>
+        <p>
+          Alunos ativos:
+            {' '}
+          <span>{activeCount}</span>
+        </p>
+      </ActiveCounter>
       <Pagination
         goToPage={setActivePage}
         totalPages={totalPages}

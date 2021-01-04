@@ -1,11 +1,9 @@
 import React, { useRef, useCallback, useEffect, useState, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { FiPhone, FiStar, FiUser } from 'react-icons/fi';
 import getValidationErrors from '../../utils/getValidationErrors';
-import Input from '../../components/Input';
 import Button from '../../components/Button';
 import PageHeader from '../../components/PageHeader';
 import { useToast } from '../../hooks/toast';
@@ -14,32 +12,46 @@ import Select from '../../components/Select';
 
 import { Container, Content } from './styles';
 
+interface Athlete {
+  id: string;
+  subscription_id: string;
+}
+
 interface Subscription {
   id: string;
   title: string;
-  value: number;
 }
 
-interface AthleteGroup {
-  id: string;
-  title: string;
-  description: string;
+interface AthleteSubUpdateData {
+  subscription_id: string;
 }
 
-interface AthleteCreateData {
-  name: string;
-  birthDate: Date;
-  phoneNumber: string;
-  subscriptionId: string;
-  athleteGroupId: string;
-}
-
-const CreateAthlete: React.FC = () => {
-  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
-  const [athleteGroups, setAthleteGroups] = useState<AthleteGroup[]>([]);
-  const formRef = useRef<FormHandles>(null);
+const AthleteSubscriptionEdit: React.FC = () => {
+  const { pathname } = useLocation();
   const history = useHistory();
+  const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
+
+  const [athlete, setAthlete] = useState<Athlete>({} as Athlete);
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+
+  const regex = /^(\/[a-z-]*\/)([a-z|A-Z|0-9-]*)(\/[a-z-]*)$/;
+  const splitUri = regex.exec(pathname);
+
+  if (!splitUri) {
+    history.push('/alunos');
+  }
+
+  useEffect(() => {
+    if (splitUri) {
+      api.get(`/athletes/${splitUri[2]}`).then((response) => {
+        setAthlete(response.data);
+      });
+      api.get('/subscriptions?page=0&pageSize=100').then((response) => {
+        setSubscriptions(response.data.subscriptions);
+      });
+    }
+  }, [splitUri]);
 
   const subscriptionOptions = useMemo(() => (
     subscriptions.map(subscription => ({
@@ -48,66 +60,20 @@ const CreateAthlete: React.FC = () => {
     }))
   ), [subscriptions]);
 
-  const athleteGroupOptions = useMemo(() => (
-    athleteGroups.map(athleteGroup => ({
-      value: athleteGroup.id,
-      label: athleteGroup.title,
-    }))
-  ), [athleteGroups]);
-
-  useEffect(() => {
-    api.get('/subscriptions?page=0&pageSize=100').then((response) => {
-      setSubscriptions(response.data.subscriptions);
-    });
-    api.get('/athletegroups').then((response) => {
-      setAthleteGroups(response.data);
-    });
-  }, []);
 
   const handleSubmit = useCallback(
-    async (data: AthleteCreateData) => {
+    async (data: AthleteSubUpdateData) => {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
-          name: Yup.string().required('Nome obrigatório'),
-          phoneNumber: Yup.string().required('Telefone obrigatório'),
-          birthDate: Yup.string()
-            .required('Data de nascimeto obrigatória')
-            .test(
-              'valid-date',
-              'Data deve ser no formato DD/MM/AAAA',
-              value => {
-                if (value) {
-                  return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
-                }
-                return false;
-              },
-            ),
-          subscriptionId: Yup.string().required('Plano obrigratório'),
-          athleteGroupId: Yup.string().required('Categoria obrigatória'),
+          subscription_id: Yup.string().required('Plano obrigratório'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        const {
-          name,
-          birthDate,
-          phoneNumber,
-          subscriptionId,
-          athleteGroupId
-        } = data;
-
-        const formData = {
-          name,
-          birthDate,
-          phoneNumber,
-          subscription_id: subscriptionId,
-          athlete_group_id: athleteGroupId,
-        };
-
-        await api.post('/athletes', formData);
+        await api.put(`/athletes/subscriptions/${athlete.id}`, data);
 
         history.push('/alunos');
       } catch (error) {
@@ -124,36 +90,23 @@ const CreateAthlete: React.FC = () => {
         });
       }
     },
-    [addToast, history],
+    [addToast, athlete.id, history],
   );
 
   return (
     <Container>
-      <PageHeader title="Cadastrar novo aluno" />
+      <PageHeader title="Atualizar plano" />
       <Content>
 
-        <h3>Dados do aluno</h3>
+        <h3>Escolha novo plano</h3>
         <Form
           ref={formRef}
           onSubmit={handleSubmit}
         >
-          <Input name="name" icon={FiUser} placeholder="Nome" />
-          <Input name="phoneNumber" icon={FiPhone} placeholder="Telefone" />
-          <Input
-            name="birthDate"
-            icon={FiStar}
-            placeholder="Data de Nascimento"
-          />
           <Select
-            name="subscriptionId"
+            name="subscription_id"
             options={subscriptionOptions}
-            defaultValue='Selecione o plano'
-
-          />
-          <Select
-            name="athleteGroupId"
-            options={athleteGroupOptions}
-            defaultValue='Selecione a categoria'
+            defaultValue={{ value: '', label: 'Selecione o plano' }}
           />
           <Button type="submit">Cadastrar</Button>
         </Form>
@@ -162,4 +115,4 @@ const CreateAthlete: React.FC = () => {
   );
 };
 
-export default CreateAthlete;
+export default AthleteSubscriptionEdit;

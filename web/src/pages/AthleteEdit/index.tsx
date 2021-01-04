@@ -13,28 +13,57 @@ import api from '../../services/apiClient';
 
 import { Container, Content, Details, Menu } from './styles';
 import { formatDate } from '../../utils/formatDate';
+import Select from '../../components/Select';
+
+interface Subscription {
+  id: string;
+  title: string;
+}
+
+interface AthleteGroup {
+  id: string;
+  title: string;
+}
 
 interface Athlete {
   id: string;
   name: string;
   birthDate: Date;
   phoneNumber: string;
+  subscription: Subscription;
+  athleteGroup: AthleteGroup;
 }
 
 interface AthleteEditData {
   name: string;
   birthDate: Date;
   phoneNumber: string;
+  subscription_id: string;
+  athlete_group_id: string;
+}
+
+interface SelectOptions {
+  value: string;
+  label: string;
 }
 
 const AthleteEdit: React.FC = () => {
   const { search } = useLocation();
   const athleteId = search.substring(1);
   const [athlete, setAthlete] = useState<Athlete>();
+  const [
+    subscriptionOptions, setSubscriptionOptions
+  ] = useState<SelectOptions[]>([]);
+
+  const [
+    athleteGroupOptions, setAthleteGroupOptions
+  ] = useState<SelectOptions[]>([]);
+
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const { addToast } = useToast();
+
 
   const handleSubmit = useCallback(
     async (data: AthleteEditData) => {
@@ -55,21 +84,15 @@ const AthleteEdit: React.FC = () => {
                 return false;
               },
             ),
+          subscription_id: Yup.string().required('Plano obrigatório'),
+          athlete_group_id: Yup.string().required('Categoria obrigatória')
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        const { name, birthDate, phoneNumber } = data;
-
-        const formData = {
-          name,
-          birthDate,
-          phoneNumber,
-        };
-
-        await api.put(`/athletes/${athleteId}`, formData);
+        await api.put(`/athletes/${athleteId}`, data);
 
         history.push('/alunos');
       } catch (error) {
@@ -93,6 +116,29 @@ const AthleteEdit: React.FC = () => {
     api.get(`/athletes/${athleteId}`).then(response => {
       setAthlete(response.data);
     });
+    api.get('/subscriptions?page=0&pageSize=100').then(response => {
+      const subs: Subscription[] = response.data.subscriptions;
+      setSubscriptionOptions(
+        subs.map(sub => (
+          {
+            value: sub.id,
+            label: sub.title
+          }
+        ))
+      );
+    });
+    api.get('/athletegroups').then(response => {
+      const athlGroups: AthleteGroup[] = response.data;
+      setAthleteGroupOptions(
+        athlGroups.map(athlGroup => (
+          {
+            value: athlGroup.id,
+            label: athlGroup.title,
+          }
+        ))
+      );
+    });
+
   }, [athleteId]);
 
   return (
@@ -119,6 +165,22 @@ const AthleteEdit: React.FC = () => {
                 icon={FiStar}
                 placeholder="Data de Nascimento"
               />
+              <Select
+                name="subscription_id"
+                options={subscriptionOptions}
+                defaultValue={{
+                  value: athlete.subscription.id,
+                  label: athlete.subscription.title
+                }}
+              />
+              <Select
+                name="athlete_group_id"
+                options={athleteGroupOptions}
+                defaultValue={{
+                  value: athlete.athleteGroup.id,
+                  label: athlete.athleteGroup.title
+                }}
+              />
               <Button type="submit">Atualizar</Button>
             </Form>
           </Details>
@@ -128,12 +190,6 @@ const AthleteEdit: React.FC = () => {
             </Link>
             <Link to={`/alunos/${athlete.id}/mensalidades-pagas`}>
               Pagamentos anteriores
-            </Link>
-            <Link to={`/alunos/${athlete.id}/mensalidades`}>
-              Receber mensalidade
-            </Link>
-            <Link to={`/alunos/${athlete.id}/mensalidades`}>
-              Receber mensalidade
             </Link>
           </Menu>
         </Content>

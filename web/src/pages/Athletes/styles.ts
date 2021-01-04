@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface RowProps {
+  active: boolean;
+}
 
 export const Container = styled.div`
   display: flex;
@@ -60,7 +64,7 @@ export const AthletesTable = styled.table`
   }
 `;
 
-export const AthleteRow = styled.tr`
+export const AthleteRow = styled.tr<RowProps>`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -94,4 +98,34 @@ export const AthleteRow = styled.tr`
       font-weight: 500;
     }
   }
+
+  ${(props) => !props.active && css`
+    background-color: var(--secondary-color-hover);
+    color: var(--secondary-text-color-inactive);
+  `}
 `;
+
+export const ActiveCounter = styled.div`
+  display: flex;
+  width: 80%;
+  max-width: 1024px;
+  margin-top: 8px;
+
+  p {
+    background-color: var(--input-background-color);
+    padding: 8px;
+    border-radius: 10px;
+    border: 2px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      font-size: 1.4rem;
+      padding: 0 8px;
+    }
+  }
+
+  align-items: flex-end;
+  justify-content: flex-end;
+`

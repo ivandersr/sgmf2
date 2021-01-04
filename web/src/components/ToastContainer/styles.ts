@@ -5,7 +5,6 @@ interface ContainerProps {
   type?: 'success' | 'error' | 'info';
 }
 
-// eslint-disable-next-line
 export const Container = styled(animated.div) <ContainerProps>`
   position: absolute;
   right: 0;
